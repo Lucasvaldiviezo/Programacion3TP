@@ -1,0 +1,582 @@
+{
+	"info": {
+		"_postman_id": "56f20bc4-cc4f-443f-a0f8-9124380a461e",
+		"name": "TP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Usuario",
+			"item": [
+				{
+					"name": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/usuario/bartender",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/usuario/bartender",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"APIREST-PHP-POO2021",
+								"Programacion3-TP",
+								"index.php",
+								"usuario",
+								"bartender"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/usuario/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "Lucas",
+									"type": "text"
+								},
+								{
+									"key": "apellido",
+									"value": "Valdiviezo",
+									"type": "text"
+								},
+								{
+									"key": "clave",
+									"value": "chau555",
+									"type": "text"
+								},
+								{
+									"key": "mail",
+									"value": "lucas@lucas.com",
+									"type": "text"
+								},
+								{
+									"key": "puesto",
+									"value": "mozo",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/usuario/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"APIREST-PHP-POO2021",
+								"Programacion3-TP",
+								"index.php",
+								"usuario",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/usuario/",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "nombre",
+									"value": "Mauro",
+									"type": "text"
+								},
+								{
+									"key": "apellido",
+									"value": "Ovando",
+									"type": "text"
+								},
+								{
+									"key": "clave",
+									"value": "defensor123",
+									"type": "text"
+								},
+								{
+									"key": "mail",
+									"value": "mauro@mauro.com",
+									"type": "text"
+								},
+								{
+									"key": "puesto",
+									"value": "cocinero",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/usuario/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"APIREST-PHP-POO2021",
+								"Programacion3-TP",
+								"index.php",
+								"usuario",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/usuario/1",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/usuario/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"APIREST-PHP-POO2021",
+								"Programacion3-TP",
+								"index.php",
+								"usuario",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Producto",
+			"item": [
+				{
+					"name": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/producto/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "codigo",
+									"value": "78999301",
+									"type": "text"
+								},
+								{
+									"key": "nombre",
+									"value": "Coca-Cola",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "5.50",
+									"type": "text"
+								},
+								{
+									"key": "stock",
+									"value": "100",
+									"type": "text"
+								},
+								{
+									"key": "tipo",
+									"value": "bebida",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/producto/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"APIREST-PHP-POO2021",
+								"Programacion3-TP",
+								"index.php",
+								"producto",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/producto/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/producto/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"APIREST-PHP-POO2021",
+								"Programacion3-TP",
+								"index.php",
+								"producto",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Mesa",
+			"item": [
+				{
+					"name": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/mesa/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "numero",
+									"value": "8",
+									"type": "text"
+								},
+								{
+									"key": "estado",
+									"value": "libre",
+									"type": "text"
+								},
+								{
+									"key": "obj_json",
+									"value": "{\"nombre\":\"mariano\",\"perfil\":\"administrador\"}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/mesa/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"APIREST-PHP-POO2021",
+								"Programacion3-TP",
+								"index.php",
+								"mesa",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/mesa/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/Programacion3TP/index.php/mesa/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Programacion3TP",
+								"index.php",
+								"mesa",
+								""
+							],
+							"query": [
+								{
+									"key": "obj_json",
+									"value": "{\"nombre\":\"mariano\",\"perfil\":\"administrador\"}",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/mesa/5",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/mesa/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"APIREST-PHP-POO2021",
+								"Programacion3-TP",
+								"index.php",
+								"mesa",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/mesa/",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "numero",
+									"value": "5555",
+									"type": "text"
+								},
+								{
+									"key": "estado",
+									"value": "libre",
+									"type": "text"
+								},
+								{
+									"key": "id",
+									"value": "10",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/mesa/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"APIREST-PHP-POO2021",
+								"Programacion3-TP",
+								"index.php",
+								"mesa",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/mesa/11",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/mesa/11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"APIREST-PHP-POO2021",
+								"Programacion3-TP",
+								"index.php",
+								"mesa",
+								"11"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pedido",
+			"item": [
+				{
+					"name": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/pedido/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "numeroMesa",
+									"value": "8",
+									"type": "text"
+								},
+								{
+									"key": "nombreProducto",
+									"value": "Milanesa",
+									"type": "text"
+								},
+								{
+									"key": "cantidad",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "estado",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/pedido/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"APIREST-PHP-POO2021",
+								"Programacion3-TP",
+								"index.php",
+								"pedido",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/pedido/10",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/pedido/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"APIREST-PHP-POO2021",
+								"Programacion3-TP",
+								"index.php",
+								"pedido",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/pedido/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/pedido/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"APIREST-PHP-POO2021",
+								"Programacion3-TP",
+								"index.php",
+								"pedido",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/pedido/",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "numeroMesa",
+									"value": "8",
+									"type": "text"
+								},
+								{
+									"key": "nombreProducto",
+									"value": "Papas Fritas",
+									"type": "text"
+								},
+								{
+									"key": "cantidad",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "estado",
+									"value": "Entregado",
+									"type": "text"
+								},
+								{
+									"key": "nombreCliente",
+									"value": "Jose",
+									"type": "text"
+								},
+								{
+									"key": "id",
+									"value": "7",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/pedido/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"APIREST-PHP-POO2021",
+								"Programacion3-TP",
+								"index.php",
+								"pedido",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/pedido/7",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/pedido/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"APIREST-PHP-POO2021",
+								"Programacion3-TP",
+								"index.php",
+								"pedido",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
