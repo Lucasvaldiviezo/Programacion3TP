@@ -28,6 +28,11 @@ desarrollo para obtener información sobre los errores
 
 $app = new \Slim\App(["settings" => $config]);
 
+$app->group('/login',function() {
+
+  $this->('/', \MWparaAutentificar::class . ':VerificarLogin');
+  
+});
 /*LLAMADA A METODOS DE INSTANCIA DE UNA CLASE*/
 $app->group('/usuario', function () {
  

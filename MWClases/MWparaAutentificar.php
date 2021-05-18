@@ -1,5 +1,5 @@
 <?php
-
+//require_once "AutentificadorJWT.php";
 
 class MWparaAutentificar
 {
@@ -17,6 +17,11 @@ class MWparaAutentificar
    * @apiExample Como usarlo:
    *    ->add(\MWparaAutenticar::class . ':VerificarUsuario')
    */
+  public function VerificarLogin($request, $response, $next)
+  {
+
+  }
+  
   public function VerificarUsuario($request, $response, $next) {
 	if($request->isGet())
 	{
