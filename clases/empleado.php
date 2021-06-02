@@ -1,6 +1,6 @@
 <?php
 
-class Usuario
+class Empleado
 {
     public $id;
     public $nombre;
@@ -23,36 +23,36 @@ class Usuario
         $this->puesto = $puesto;
     }
 
-    public static function TraerTodoLosUsuarios()
+    public static function TraerTodoLosEmpleados()
 	{
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-			$consulta =$objetoAccesoDato->RetornarConsulta("select id,nombre as nombre, apellido as apellido,clave as clave,mail as mail,puesto as puesto from usuarios");
+			$consulta =$objetoAccesoDato->RetornarConsulta("select id,nombre as nombre, apellido as apellido,clave as clave,mail as mail,puesto as puesto from empleados");
 			$consulta->execute();			
-			return $consulta->fetchAll(PDO::FETCH_CLASS, "Usuario");		
+			return $consulta->fetchAll(PDO::FETCH_CLASS, "Empleado");		
 	}
 
-    public static function TraerUnUsuarioId($id) 
+    public static function TraerUnEmpleadoId($id) 
 	{
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-			$consulta =$objetoAccesoDato->RetornarConsulta("select id,nombre as nombre, apellido as apellido,clave as clave,mail as mail,puesto as puesto from usuarios where id = $id");
+			$consulta =$objetoAccesoDato->RetornarConsulta("select id,nombre as nombre, apellido as apellido,clave as clave,mail as mail,puesto as puesto from empleados where id = $id");
 			$consulta->execute();
-			$usuarioBuscado= $consulta->fetchObject('Usuario');
+			$usuarioBuscado= $consulta->fetchObject('Empleado');
 			return $usuarioBuscado;	
 	}
 
-    public static function TraerUsuariosPuesto($puesto) 
+    public static function TraerEmpleadosPuesto($puesto) 
 	{
 			$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso();
             $puestoAux = '"' . $puesto . '"'; 
-			$consulta =$objetoAccesoDato->RetornarConsulta("select id,nombre as nombre, apellido as apellido,clave as clave,mail as mail,puesto as puesto from usuarios where puesto = $puestoAux");
+			$consulta =$objetoAccesoDato->RetornarConsulta("select id,nombre as nombre, apellido as apellido,clave as clave,mail as mail,puesto as puesto from empleados where puesto = $puestoAux");
 			$consulta->execute();			
-			return $consulta->fetchAll(PDO::FETCH_CLASS, "Usuario");	
+			return $consulta->fetchAll(PDO::FETCH_CLASS, "Empleado");	
 	}
 
-    public function InsertarUsuarioParametros()
+    public function InsertarEmpleadoParametros()
     {
             $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-            $consulta =$objetoAccesoDato->RetornarConsulta("INSERT into usuarios (nombre,apellido,clave,mail,puesto)values(:nombre,:apellido,:clave,:mail,:puesto)");
+            $consulta =$objetoAccesoDato->RetornarConsulta("INSERT into empleados (nombre,apellido,clave,mail,puesto)values(:nombre,:apellido,:clave,:mail,:puesto)");
             $consulta->bindValue(':nombre',$this->nombre, PDO::PARAM_STR);
             $consulta->bindValue(':apellido', $this->apellido, PDO::PARAM_STR);
             $consulta->bindValue(':clave', $this->clave, PDO::PARAM_STR);
@@ -61,23 +61,23 @@ class Usuario
             return $consulta->execute();
     }
 
-    public function BorrarUsuario()
+    public function BorrarEmpleado()
 	{
 		$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
 		$consulta =$objetoAccesoDato->RetornarConsulta("
 		delete 
-		from usuarios 				
+		from empleados 				
 		WHERE id=:id");	
 		$consulta->bindValue(':id',$this->id, PDO::PARAM_INT);		
 		$consulta->execute();
 		return $consulta->rowCount();
 	}
 
-    public function ModificarUsuarioParametros()
+    public function ModificarEmpleadoParametros()
 	{
         $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
         $consulta =$objetoAccesoDato->RetornarConsulta("
-            update usuarios 
+            update empleados 
             set nombre=:nombre,
             apellido=:apellido,
             clave=:clave,

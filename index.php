@@ -4,7 +4,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 require_once './vendor/autoload.php';
 require_once './clases/AccesoDatos.php';
-require_once './apis/usuarioApi.php';
+require_once './apis/empleadoApi.php';
 require_once './apis/productoApi.php';
 require_once './apis/mesaApi.php';
 require_once './apis/pedidoApi.php';
@@ -28,23 +28,24 @@ desarrollo para obtener información sobre los errores
 
 $app = new \Slim\App(["settings" => $config]);
 
-$app->group('/login',function() {
+/*CON ESTO LOGEO PARA OBTENER EL JWT*/ 
+/*$app->group('/login',function() {
 
   $this->('/', \MWparaAutentificar::class . ':VerificarLogin');
-  
-});
+
+});*/
 /*LLAMADA A METODOS DE INSTANCIA DE UNA CLASE*/
-$app->group('/usuario', function () {
+$app->group('/empleado', function () {
  
-  $this->get('/', \usuarioApi::class . ':TraerTodos');
+  $this->get('/', \empleadoApi::class . ':TraerTodos');
  
-  $this->get('/{puesto}', \usuarioApi::class . ':TraerUno');
+  $this->get('/{puesto}', \empleadoApi::class . ':TraerUno');
 
-  $this->post('/', \usuarioApi::class . ':CargarUno');
+  $this->post('/', \empleadoApi::class . ':CargarUno');
 
-  $this->delete('/{id}', \usuarioApi::class . ':BorrarUno');
+  $this->delete('/{id}', \empleadoApi::class . ':BorrarUno');
 
-  $this->put('/', \usuarioApi::class . ':ModificarUno');
+  $this->put('/', \empleadoApi::class . ':ModificarUno');
      
 })/*->add(\MWparaAutentificar::class . ':VerificarUsuario')*/;
 

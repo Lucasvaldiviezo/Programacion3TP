@@ -1,19 +1,19 @@
 <?php
-require_once './clases/usuario.php';
+require_once './clases/empleado.php';
 require_once 'IApiUsable.php';
 
-class UsuarioApi extends Usuario implements IApiUsable
+class EmpleadoApi extends Empleado implements IApiUsable
 {
     public function TraerUno($request, $response, $args) {
         $puesto=$args['puesto'];
-        $todosLosUsuarios=Usuario::TraerUsuariosPuesto($puesto);
-        $newResponse = $response->withJson($todosLosUsuarios, 200);  
+        $todosLosEmpleados=Empleado::TraerEmpleadosPuesto($puesto);
+        $newResponse = $response->withJson($todosLosEmpleados, 200);  
         return $newResponse;
     }
 
     public function TraerTodos($request, $response, $args) {
-        $todosLosUsuarios=Usuario::TraerTodoLosUsuarios();
-        $newResponse = $response->withJson($todosLosUsuarios, 200);  
+        $todosLosEmpleados=Empleado::TraerTodoLosEmpleados();
+        $newResponse = $response->withJson($todosLosEmpleados, 200);  
         return $newResponse;
     }
 
@@ -26,9 +26,9 @@ class UsuarioApi extends Usuario implements IApiUsable
         $mail = $ArrayDeParametros['mail'];
         $puesto = $ArrayDeParametros['puesto'];
        
-        $miUsuario = new Usuario();
-        $miUsuario->__construct1($nombre,$apellido,$clave,$mail,$puesto);
-        $miUsuario->InsertarUsuarioParametros();
+        $miEmpleado = new Empleado();
+        $miEmpleado->__construct1($nombre,$apellido,$clave,$mail,$puesto);
+        $miEmpleado->InsertarEmpleadoParametros();
         //$archivos = $request->getUploadedFiles();
         //$destino="./fotos/";
         //var_dump($archivos);
@@ -39,7 +39,7 @@ class UsuarioApi extends Usuario implements IApiUsable
         //$extension=array_reverse($extension);
         //$archivos['foto']->moveTo($destino.$nombre.$mail.".".$extension[0]);
         
-        $response->getBody()->write("se guardo el usuario" . "\n");
+        $response->getBody()->write("se guardo el empleado" . "\n");
 
         return $response;
     }
@@ -47,9 +47,9 @@ class UsuarioApi extends Usuario implements IApiUsable
     public function BorrarUno($request, $response, $args) {
         //$ArrayDeParametros = $request->getParsedBody();
         $id=$args['id'];
-        $miUsuario= new Usuario();
-        $miUsuario->id=$id;
-        $cantidadDeBorrados=$miUsuario->BorrarUsuario();
+        $miEmpleado= new Empleado();
+        $miEmpleado->id=$id;
+        $cantidadDeBorrados=$miEmpleado->BorrarEmpleado();
         $objDelaRespuesta= new stdclass();
         $objDelaRespuesta->cantidad=$cantidadDeBorrados;
         if($cantidadDeBorrados>0)
@@ -66,16 +66,16 @@ class UsuarioApi extends Usuario implements IApiUsable
 
    public function ModificarUno($request, $response, $args) {
         $ArrayDeParametros = $request->getParsedBody();	
-        $miUsuario = new Usuario();
+        $miEmpleado = new Empleado();
         $nombre = $ArrayDeParametros['nombre'];
         $apellido = $ArrayDeParametros['apellido'];
         $clave = $ArrayDeParametros['clave'];
         $mail = $ArrayDeParametros['mail'];
         $puesto = $ArrayDeParametros['puesto'];
-        $miUsuario->__construct1($nombre,$apellido,$clave,$mail,$puesto);
-        $miUsuario->id=$ArrayDeParametros['id'];
+        $miEmpleado->__construct1($nombre,$apellido,$clave,$mail,$puesto);
+        $miEmpleado->id=$ArrayDeParametros['id'];
         
-        $resultado =$miUsuario->ModificarUsuarioParametros();
+        $resultado =$miEmpleado->ModificarEmpleadoParametros();
         $objDelaRespuesta= new stdclass();
         $objDelaRespuesta->resultado=$resultado;
         return $response->withJson($objDelaRespuesta, 200);		

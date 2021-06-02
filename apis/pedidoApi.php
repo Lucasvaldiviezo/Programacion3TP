@@ -20,13 +20,13 @@ class PedidoApi extends Pedido implements IApiUsable
 
     public function CargarUno($request, $response, $args) {
         $ArrayDeParametros = $request->getParsedBody();
-        $nombreCliente = $ArrayDeParametros['nombreCliente'];
-        $numeroMesa = $ArrayDeParametros['numeroMesa'];
-        $nombreProducto = $ArrayDeParametros['nombreProducto'];
+        $idCliente = $ArrayDeParametros['idCliente'];
+        $idMesa = $ArrayDeParametros['idMesa'];
+        $idProducto = $ArrayDeParametros['idProducto'];
         $cantidad = $ArrayDeParametros['cantidad'];
         $estado = $ArrayDeParametros['estado'];
         $miPedido = new Pedido();
-        $miPedido->__construct1($nombreCliente,$numeroMesa,$nombreProducto,$cantidad,$estado);
+        $miPedido->__construct1($idCliente,$idMesa,$idProducto,$cantidad,$estado);
         $miPedido->InsertarPedidoParametros();
         
         $response->getBody()->write("se guardo el pedido" . "\n");
@@ -54,6 +54,21 @@ class PedidoApi extends Pedido implements IApiUsable
     }
 
     public function ModificarUno($request, $response, $args) {
+        $ArrayDeParametros = $request->getParsedBody();
+        $id = $ArrayDeParametros['id'];
+        $estado = $ArrayDeParametros['estado'];   	
+        $miPedido = new Pedido();
+        $miPedido = Pedido::TraerUnPedidoId($id);
+        $miPedido->id=$id;
+        $miPedido->estado = $estado;
+        
+        $resultado =$miPedido->ModificarEstadoParametros();
+        $objDelaRespuesta= new stdclass();
+        $objDelaRespuesta->resultado=$resultado;
+        return $response->withJson($objDelaRespuesta, 200);		
+    }
+
+    /*public function ModificarUno($request, $response, $args) {
         $ArrayDeParametros = $request->getParsedBody();   	
         $miPedido = new Pedido();
         $nombreCliente = $ArrayDeParametros['nombreCliente'];
@@ -68,9 +83,7 @@ class PedidoApi extends Pedido implements IApiUsable
         $objDelaRespuesta= new stdclass();
         $objDelaRespuesta->resultado=$resultado;
         return $response->withJson($objDelaRespuesta, 200);		
-    }
-
-
+    }*/
     
 }
 
