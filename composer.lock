@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8718599d6207fa2fd25c0e75208f8979",
+    "content-hash": "f0d20bfa9f0442ddbbb6020f2564fc80",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -310,16 +310,16 @@
         },
         {
             "name": "illuminate/database",
-            "version": "8.x-dev",
+            "version": "v8.44.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/database.git",
-                "reference": "a022beeacf45498afba8b1bf8ad80e1d59f77264"
+                "reference": "c8a1d6c4bd636779cdf3c3b93d0b149472278070"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/database/zipball/a022beeacf45498afba8b1bf8ad80e1d59f77264",
-                "reference": "a022beeacf45498afba8b1bf8ad80e1d59f77264",
+                "url": "https://api.github.com/repos/illuminate/database/zipball/c8a1d6c4bd636779cdf3c3b93d0b149472278070",
+                "reference": "c8a1d6c4bd636779cdf3c3b93d0b149472278070",
                 "shasum": ""
             },
             "require": {
@@ -374,7 +374,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2021-05-17T21:13:45+00:00"
+            "time": "2021-05-27T15:21:03+00:00"
         },
         {
             "name": "illuminate/macroable",
@@ -2012,9 +2012,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "illuminate/database": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

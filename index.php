@@ -1,6 +1,7 @@
 <?php
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 require_once './vendor/autoload.php';
 require_once './clases/AccesoDatos.php';
@@ -14,6 +15,22 @@ require './MWClases/MWparaCORS.php';
 
 $config['displayErrorDetails'] = true;
 $config['addContentLengthHeader'] = false;
+
+$container=$app->getContainer();
+
+$capsule = new Capsule;
+$capsule->addConnection([
+    'driver'    => 'mysql',
+    'host'      => $_ENV['MYSQL_HOST'],
+    'database'  => $_ENV['MYSQL_DB'],
+    'username'  => $_ENV['MYSQL_USER'],
+    'password'  => $_ENV['MYSQL_PASS'],
+    'charset'   => 'utf8',
+    'collation' => 'utf8_unicode_ci',
+    'prefix'    => '',
+]);
+$capsule->setAsGlobal();
+$capsule->bootEloquent();
 
 /*
 ¡La primera línea es la más importante! A su vez en el modo de 
@@ -39,7 +56,7 @@ $app->group('/empleado', function () {
  
   $this->get('/', \empleadoApi::class . ':TraerTodos');
  
-  $this->get('/{puesto}', \empleadoApi::class . ':TraerUno');
+  $this->get('/{id}', \empleadoApi::class . ':TraerUno');
 
   $this->post('/', \empleadoApi::class . ':CargarUno');
 
