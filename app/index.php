@@ -16,15 +16,18 @@ require './MWClases/MWparaCORS.php';
 $config['displayErrorDetails'] = true;
 $config['addContentLengthHeader'] = false;
 
+$app = new \Slim\App(["settings" => $config]);
+
+
 $container=$app->getContainer();
 
 $capsule = new Capsule;
 $capsule->addConnection([
     'driver'    => 'mysql',
-    'host'      => $_ENV['MYSQL_HOST'],
-    'database'  => $_ENV['MYSQL_DB'],
-    'username'  => $_ENV['MYSQL_USER'],
-    'password'  => $_ENV['MYSQL_PASS'],
+    'host'      => 'localhost',
+    'database'  => 'tp',
+    'username'  => 'root',
+    'password'  => '',
     'charset'   => 'utf8',
     'collation' => 'utf8_unicode_ci',
     'prefix'    => '',
@@ -32,18 +35,8 @@ $capsule->addConnection([
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
 
-/*
-¡La primera línea es la más importante! A su vez en el modo de 
-desarrollo para obtener información sobre los errores
- (sin él, Slim por lo menos registrar los errores por lo que si está utilizando
-  el construido en PHP webserver, entonces usted verá en la salida de la consola 
-  que es útil).
 
-  La segunda línea permite al servidor web establecer el encabezado Content-Length, 
-  lo que hace que Slim se comporte de manera más predecible.
-*/
 
-$app = new \Slim\App(["settings" => $config]);
 
 /*CON ESTO LOGEO PARA OBTENER EL JWT*/ 
 /*$app->group('/login',function() {

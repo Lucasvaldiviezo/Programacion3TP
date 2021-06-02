@@ -1,19 +1,19 @@
 <?php
-require_once './bdClases/empleado.php';
+require_once './models/empleado.php';
 require_once 'IApiUsable.php';
 
-use \Programacion3TP\bdClases\Empleado as Empleado;
+use \App\Models\Empleado as Empleado;
 
 class EmpleadoApi extends Empleado implements IApiUsable
 {
     public function TraerUno($request, $response, $args) {
-        $puesto=$args['id'];
+        $emp=$args['id'];
         $empleado = Empleado::where('id', $emp)->first();
         $payload = json_encode($empleado);
         $response->getBody()->write($payload);
         
         return $response
-        ->withHeader('Content-Type', 'application/json');
+         ->withHeader('Content-Type', 'application/json');
     }
 
     public function TraerTodos($request, $response, $args) {
