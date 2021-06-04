@@ -4,7 +4,7 @@ require_once 'IApiUsable.php';
 
 use \App\Models\Empleado as Empleado;
 
-class EmpleadoApi extends Empleado implements IApiUsable
+class EmpleadoApi implements IApiUsable
 {
     public function TraerUno($request, $response, $args) {
         $emp=$args['id'];
@@ -17,73 +17,85 @@ class EmpleadoApi extends Empleado implements IApiUsable
     }
 
     public function TraerTodos($request, $response, $args) {
-        $todosLosEmpleados=Empleado::TraerTodoLosEmpleados();
-        $newResponse = $response->withJson($todosLosEmpleados, 200);  
-        return $newResponse;
+        $lista = Empleado::all();
+        $payload = json_encode(array("listaEmpleado" => $lista));
+
+        $response->getBody()->write($payload);
+        return $response
+          ->withHeader('Content-Type', 'application/json');
     }
 
     public function CargarUno($request, $response, $args) {
-        $ArrayDeParametros = $request->getParsedBody();
-        //var_dump($ArrayDeParametros);
-        $nombre = $ArrayDeParametros['nombre'];
-        $apellido = $ArrayDeParametros['apellido'];
-        $clave = $ArrayDeParametros['clave'];
-        $mail = $ArrayDeParametros['mail'];
-        $puesto = $ArrayDeParametros['puesto'];
-       
-        $miEmpleado = new Empleado();
-        $miEmpleado->__construct1($nombre,$apellido,$clave,$mail,$puesto);
-        $miEmpleado->InsertarEmpleadoParametros();
-        //$archivos = $request->getUploadedFiles();
-        //$destino="./fotos/";
-        //var_dump($archivos);
-        //var_dump($archivos['foto']);
-        //$nombreAnterior=$archivos['foto']->getClientFilename();
-        //$extension= explode(".", $nombreAnterior)  ;
-        //var_dump($nombreAnterior);
-        //$extension=array_reverse($extension);
-        //$archivos['foto']->moveTo($destino.$nombre.$mail.".".$extension[0]);
-        
-        $response->getBody()->write("se guardo el empleado" . "\n");
+        $parametros = $request->getParsedBody();
 
-        return $response;
+        $nombre = $parametros['nombre'];
+        $apellido = $parametros['apellido'];
+        $clave = $parametros['clave'];
+        $mail = $parametros['mail'];
+
+        if($parametros['puesto'] == 'mozo' || $parametros['puesto'] == 'cocinero' || $parametros['puesto'] == 'bartender' ||
+        $parametros['puesto'] == 'candybar' || $parametros['puesto'] == 'admin')
+        {
+            $puesto = $parametros['puesto'];
+        }else
+        {
+            $puesto = 'mozo';
+        }
+        // Creamos el usuario
+        $emp = new Empleado();
+        $emp->nombre = $nombre;
+        $emp->apellido = $apellido;
+        $emp->mail = $mail;
+        $emp->clave = $clave;
+        $emp->puesto = $puesto;
+        $emp->save();
+
+        $payload = json_encode(array("mensaje" => "Empleado creado con exito"));
+
+        $response->getBody()->write($payload);
+        return $response
+            ->withHeader('Content-Type', 'application/json');
     }
 
     public function BorrarUno($request, $response, $args) {
-        //$ArrayDeParametros = $request->getParsedBody();
-        $id=$args['id'];
-        $miEmpleado= new Empleado();
-        $miEmpleado->id=$id;
-        $cantidadDeBorrados=$miEmpleado->BorrarEmpleado();
-        $objDelaRespuesta= new stdclass();
-        $objDelaRespuesta->cantidad=$cantidadDeBorrados;
-        if($cantidadDeBorrados>0)
-        {
-            $objDelaRespuesta->resultado="Se borro el usuario";
-        }
-        else
-        {
-            $objDelaRespuesta->resultado="No se borro el usuario";
-        }
-        $newResponse = $response->withJson($objDelaRespuesta, 200);  
-        return $newResponse;
+        $empleadoId = $args['id'];
+        $empleado = Empleado::find($empleadoId);
+        $empleado->delete();
+        $payload = json_encode(array("mensaje" => "Empleado borrado con exito"));
+        $response->getBody()->write($payload);
+        return $response
+          ->withHeader('Content-Type', 'application/json');
     }
 
    public function ModificarUno($request, $response, $args) {
-        $ArrayDeParametros = $request->getParsedBody();	
-        $miEmpleado = new Empleado();
-        $nombre = $ArrayDeParametros['nombre'];
-        $apellido = $ArrayDeParametros['apellido'];
-        $clave = $ArrayDeParametros['clave'];
-        $mail = $ArrayDeParametros['mail'];
-        $puesto = $ArrayDeParametros['puesto'];
-        $miEmpleado->__construct1($nombre,$apellido,$clave,$mail,$puesto);
-        $miEmpleado->id=$ArrayDeParametros['id'];
+    $parametros = $request->getParsedBody();
+    $nombreModificado = $parametros['nombre'];
+    $apellidoModificado = $parametros['apellido'];
+    $mailModificado = $parametros['mail'];
+    $claveModificada = $parametros['clave'];
+    $puestoModificado = $parametros['puesto'];
+    $empId = $parametros['id'];
+
+    // Conseguimos el objeto
+    $emp = Empleado::where('id', '=', $empId)->first();
+
+    // Si existe
+    if ($emp !== null) {
+        $emp->nombre = $nombreModificado;
+        $emp->apellido = $apellidoModificado;
+        $emp->mail = $mailModificado;
+        $emp->clave = $claveModificada;
+        $emp->puesto = $puestoModificado;
+        $emp->save();
+        $payload = json_encode(array("mensaje" => "Empleado modificado con exito"));
         
-        $resultado =$miEmpleado->ModificarEmpleadoParametros();
-        $objDelaRespuesta= new stdclass();
-        $objDelaRespuesta->resultado=$resultado;
-        return $response->withJson($objDelaRespuesta, 200);		
+    } else {
+      $payload = json_encode(array("mensaje" => "Empleado no encontrado"));
+    }
+
+    $response->getBody()->write($payload);
+    return $response
+      ->withHeader('Content-Type', 'application/json');	
     }
 }
 
