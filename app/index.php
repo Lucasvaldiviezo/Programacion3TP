@@ -9,6 +9,7 @@ require_once './apis/empleadoApi.php';
 require_once './apis/productoApi.php';
 require_once './apis/mesaApi.php';
 require_once './apis/pedidoApi.php';
+require_once './apis/clienteApi.php';
 require './MWClases/MWparaAutentificar.php';
 require './MWClases/MWparaCORS.php';
 
@@ -100,6 +101,21 @@ $app->group('/pedido', function () {
   $this->put('/', \pedidoApi::class . ':ModificarUno');
      
 })/*->add(\MWparaAutentificar::class . ':VerificarUsuario')*/;
+
+$app->group('/cliente', function () {
+ 
+  $this->get('/', \clienteApi::class . ':TraerTodos');
+ 
+  $this->get('/{id}', \clienteApi::class . ':TraerUno');
+
+  $this->post('/', \clienteApi::class . ':CargarUno');
+
+  $this->delete('/{id}', \clienteApi::class . ':BorrarUno');
+
+  $this->put('/', \clienteApi::class . ':ModificarUno');
+     
+})/*->add(\MWparaAutentificar::class . ':VerificarUsuario')*/;
+
 $app->run();
 
 ?>
