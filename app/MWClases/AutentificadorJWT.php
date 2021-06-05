@@ -4,7 +4,7 @@ use Firebase\JWT\JWT;
 
 class AutentificadorJWT
 {
-    private static $claveSecreta = 'ClaveSuperSecreta@';
+    private static $claveSecreta = 'RestoPiola123';
     private static $tipoEncriptacion = ['HS256'];
     private static $aud = null;
     
@@ -21,7 +21,7 @@ class AutentificadorJWT
             'exp' => $ahora + (60*60),
             'aud' => self::Aud(),
             'data' => $datos,
-            'app'=> "API REST CD 2017"
+            'app'=> "API REST RESTAURANT 2021"
         );
      
         return JWT::encode($payload, self::$claveSecreta);

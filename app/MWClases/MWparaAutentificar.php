@@ -1,5 +1,8 @@
 <?php
-//require_once "AutentificadorJWT.php";
+require_once "AutentificadorJWT.php";
+require_once "./apis/empleadoApi.php";
+
+use \App\Models\Empleado as Empleado;
 
 class MWparaAutentificar
 {
@@ -19,7 +22,24 @@ class MWparaAutentificar
    */
   public function VerificarLogin($request, $response, $next)
   {
+	$respuesta = "Credenciales invalidas";
+	$ArrayDeParametros = $request->getParsedBody();
+	$mail=$ArrayDeParametros["mail"];
+	$clave=$ArrayDeParametros["clave"];
 
+	$lista = Empleado::all();
+	foreach($lista as $emp)
+	{
+		if($emp->mail == $mail && $emp->clave == $clave)
+		{
+			$datos = array('usuario' => $mail,'perfil' => $emp->puesto, 'clave' => $clave);
+			$token= AutentificadorJWT::CrearToken($datos);
+			$respuesta = $token;
+			break;
+		}
+	}
+	
+	echo $respuesta;
   }
   
   public function VerificarUsuario($request, $response, $next) {

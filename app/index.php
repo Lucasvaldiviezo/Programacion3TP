@@ -40,11 +40,11 @@ $capsule->bootEloquent();
 
 
 /*CON ESTO LOGEO PARA OBTENER EL JWT*/ 
-/*$app->group('/login',function() {
+$app->group('/login',function() {
 
-  $this->('/', \MWparaAutentificar::class . ':VerificarLogin');
+  $this->post('/', \MWparaAutentificar::class . ':VerificarLogin');
 
-});*/
+});
 /*LLAMADA A METODOS DE INSTANCIA DE UNA CLASE*/
 $app->group('/empleado', function () {
  
@@ -64,7 +64,7 @@ $app->group('/producto', function () {
  
   $this->get('/', \productoApi::class . ':TraerTodos');
  
-  $this->get('/{tipo}', \productoApi::class . ':TraerUno');
+  $this->get('/{id}', \productoApi::class . ':TraerUno');
 
   $this->post('/', \productoApi::class . ':CargarUno');
 

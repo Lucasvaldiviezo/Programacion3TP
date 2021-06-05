@@ -157,7 +157,7 @@
 			"name": "Producto",
 			"item": [
 				{
-					"name": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/producto/",
+					"name": "http://localhost/Programacion3TP/app/index.php/producto/",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -166,35 +166,35 @@
 							"formdata": [
 								{
 									"key": "nombre",
-									"value": "Papas Fritas",
+									"value": "Pepsi",
 									"type": "text"
 								},
 								{
 									"key": "precio",
-									"value": "8.25",
+									"value": "10.30",
 									"type": "text"
 								},
 								{
 									"key": "stock",
-									"value": "300",
+									"value": "10",
 									"type": "text"
 								},
 								{
 									"key": "tipo",
-									"value": "comida",
+									"value": "bebida",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/producto/",
+							"raw": "http://localhost/Programacion3TP/app/index.php/producto/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"path": [
-								"APIREST-PHP-POO2021",
-								"Programacion3-TP",
+								"Programacion3TP",
+								"app",
 								"index.php",
 								"producto",
 								""
@@ -204,22 +204,96 @@
 					"response": []
 				},
 				{
-					"name": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/producto/",
+					"name": "http://localhost/Programacion3TP/app/index.php/producto/",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/producto/",
+							"raw": "http://localhost/Programacion3TP/app/index.php/producto/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"path": [
-								"APIREST-PHP-POO2021",
-								"Programacion3-TP",
+								"Programacion3TP",
+								"app",
 								"index.php",
 								"producto",
 								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost/Programacion3TP/app/index.php/producto/",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "nombre",
+									"value": "Sprite",
+									"type": "text"
+								},
+								{
+									"key": "stock",
+									"value": "200",
+									"type": "text"
+								},
+								{
+									"key": "tipo",
+									"value": "bebida",
+									"type": "text"
+								},
+								{
+									"key": "precio",
+									"value": "5.50",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/Programacion3TP/app/index.php/producto/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Programacion3TP",
+								"app",
+								"index.php",
+								"producto",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost/Programacion3TP/app/index.php/producto/3",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/Programacion3TP/app/index.php/producto/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Programacion3TP",
+								"app",
+								"index.php",
+								"producto",
+								"3"
 							]
 						}
 					},
@@ -237,23 +311,7 @@
 						"header": [],
 						"body": {
 							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "numero",
-									"value": "8",
-									"type": "text"
-								},
-								{
-									"key": "estado",
-									"value": "libre",
-									"type": "text"
-								},
-								{
-									"key": "obj_json",
-									"value": "{\"nombre\":\"mariano\",\"perfil\":\"administrador\"}",
-									"type": "text"
-								}
-							]
+							"formdata": []
 						},
 						"url": {
 							"raw": "http://localhost/Programacion3TP/app/index.php/mesa/",
@@ -278,13 +336,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost/Programacion3TP/index.php/mesa/",
+							"raw": "http://localhost/Programacion3TP/app/index.php/mesa/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"path": [
 								"Programacion3TP",
+								"app",
 								"index.php",
 								"mesa",
 								""
@@ -309,31 +368,26 @@
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"key": "numero",
-									"value": "5555",
-									"type": "text"
-								},
-								{
 									"key": "estado",
-									"value": "libre",
+									"value": "con cliente esperando pedido",
 									"type": "text"
 								},
 								{
 									"key": "id",
-									"value": "10",
+									"value": "1",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/mesa/",
+							"raw": "http://localhost/Programacion3TP/app/index.php/mesa/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"path": [
-								"APIREST-PHP-POO2021",
-								"Programacion3-TP",
+								"Programacion3TP",
+								"app",
 								"index.php",
 								"mesa",
 								""

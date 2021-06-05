@@ -1,5 +1,5 @@
 <?php
-require_once './clases/producto.php';
+require_once './models/producto.php';
 require_once 'IApiUsable.php';
 
 use \App\Models\Producto as Producto;
