@@ -34,7 +34,7 @@ class EmpleadoApi implements IApiUsable
         $mail = $parametros['mail'];
 
         if($parametros['puesto'] == 'mozo' || $parametros['puesto'] == 'cocinero' || $parametros['puesto'] == 'bartender' ||
-        $parametros['puesto'] == 'candybar' || $parametros['puesto'] == 'admin')
+        $parametros['puesto'] == 'candybar' || $parametros['puesto'] == 'socio')
         {
             $puesto = $parametros['puesto'];
         }else

@@ -2,69 +2,87 @@
 require_once './clases/producto.php';
 require_once 'IApiUsable.php';
 
-class ProductoApi extends Producto implements IApiUsable
+use \App\Models\Producto as Producto;
+
+class ProductoApi implements IApiUsable
 {
     public function TraerUno($request, $response, $args) {
-        $tipo=$args['tipo'];
-        $todosLosProductos=Producto::TraerProductosTipo($tipo);
-        $newResponse = $response->withJson($todosLosProductos, 200);  
-        return $newResponse;
+        $prod=$args['id'];
+        $producto = Producto::where('id', $prod)->first();
+        $payload = json_encode($producto);
+        $response->getBody()->write($payload);
+        
+        return $response
+         ->withHeader('Content-Type', 'application/json');
     }
 
     public function TraerTodos($request, $response, $args) {
-        $todosLosProductos=Producto::TraerTodosLosProductos();
-        $newResponse = $response->withJson($todosLosProductos, 200);  
-        return $newResponse;
+        $lista = Producto::all();
+        $payload = json_encode(array("listaProducto" => $lista));
+
+        $response->getBody()->write($payload);
+        return $response
+          ->withHeader('Content-Type', 'application/json');
     }
 
     public function CargarUno($request, $response, $args) {
-        $ArrayDeParametros = $request->getParsedBody();
-        $nombre = $ArrayDeParametros['nombre'];
-        $precio = $ArrayDeParametros['precio'];
-        $stock = $ArrayDeParametros['stock'];
-        $tipo = $ArrayDeParametros['tipo'];
-       
-        $miProducto = new Producto();
-        $miProducto->__construct1($nombre,$precio,$stock,$tipo);
-        $miProducto->InsertarProductoParametros(); 
-        $response->getBody()->write("se guardo el producto" . "\n");
+        $parametros = $request->getParsedBody();
+        $nombre = $parametros['nombre'];
+        $precio = $parametros['precio'];
+        $stock = $parametros['stock'];
+        $tipo = $parametros['tipo'];
+        // Creamos el producto
+        $prod = new Producto();
+        $prod->nombre = $nombre;
+        $prod->precio = $precio;
+        $prod->tipo = $tipo;
+        $prod->stock = $stock;
+        $prod->save();
 
-        return $response;
+        $payload = json_encode(array("mensaje" => "Producto creado con exito"));
+
+        $response->getBody()->write($payload);
+        return $response
+            ->withHeader('Content-Type', 'application/json');
     }
 
     public function BorrarUno($request, $response, $args) {
-        $id=$args['id'];
-        $miProducto= new Producto();
-        $miProducto->id=$id;
-        $cantidadDeBorrados=$miProducto->BorrarProducto();
-        $objDelaRespuesta= new stdclass();
-        $objDelaRespuesta->cantidad=$cantidadDeBorrados;
-        if($cantidadDeBorrados>0)
-        {
-            $objDelaRespuesta->resultado="Se borro el producto";
-        }
-        else
-        {
-            $objDelaRespuesta->resultado="No se borro el producto";
-        }
-        $newResponse = $response->withJson($objDelaRespuesta, 200);  
-        return $newResponse;
+        $productoId = $args['id'];
+        $producto = Producto::find($productoId);
+        $producto->delete();
+        $payload = json_encode(array("mensaje" => "Producto borrado con exito"));
+        $response->getBody()->write($payload);
+        return $response
+          ->withHeader('Content-Type', 'application/json');
     }
 
    public function ModificarUno($request, $response, $args) {
-        $ArrayDeParametros = $request->getParsedBody();   	
-        $miProducto = new Producto();
-        $nombre = $ArrayDeParametros['nombre'];
-        $precio = $ArrayDeParametros['precio'];
-        $tipo = $ArrayDeParametros['tipo'];
-        $stock = $ArrayDeParametros['stock'];
-        $miProducto->__construct1($nombre,$precio,$stock,$tipo);
-        $miProducto->id=$ArrayDeParametros['id'];
+    $parametros = $request->getParsedBody();
+    $nombreModificado = $parametros['nombre'];
+    $tipoModificado = $parametros['tipo'];
+    $precioModificado = $parametros['precio'];
+    $stockModificado = $parametros['stock'];
+    $prodId = $parametros['id'];
+
+    // Conseguimos el objeto
+    $producto = Producto::where('id', '=', $prodId)->first();
+
+    // Si existe
+    if ($producto !== null) {
+        $producto->nombre = $nombreModificado;
+        $producto->stock = $stockModificado;
+        $producto->precio = $precioModificado;
+        $producto->tipo = $tipoModificado;
+        $producto->save();
+        $payload = json_encode(array("mensaje" => "Producto modificado con exito"));
         
-        $resultado =$miProducto->ModificarProductoParametros();
-        $objDelaRespuesta= new stdclass();
-        $objDelaRespuesta->resultado=$resultado;
-        return $response->withJson($objDelaRespuesta, 200);		
+    } else {
+    $payload = json_encode(array("mensaje" => "Producto no encontrado"));
+    }
+
+    $response->getBody()->write($payload);
+    return $response
+    ->withHeader('Content-Type', 'application/json');	
     }
 
     

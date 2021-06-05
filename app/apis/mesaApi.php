@@ -1,69 +1,84 @@
 <?php
-require_once './clases/mesa.php';
+require_once './models/mesa.php';
 require_once 'IApiUsable.php';
 
-class MesaApi extends Mesa implements IApiUsable
+use \App\Models\Mesa as Mesa;
+
+class MesaApi implements IApiUsable
 {
     public function TraerUno($request, $response, $args) {
-        $numero=$args['numero'];
-        $laMesa=Mesa::TraerUnaMesaNumero($numero);
-        //$response->getBody()->write("Por GET ->" . "\n"); 
-        $newResponse = $response->withJson($laMesa, 200); 
-        return $newResponse;
+        $ms=$args['id'];
+        $mesa = Mesa::where('id', $ms)->first();
+        $payload = json_encode($mesa);
+        $response->getBody()->write($payload);
+        
+        return $response
+         ->withHeader('Content-Type', 'application/json');
     }
 
     public function TraerTodos($request, $response, $args) {
-        $todasLasMesas=Mesa::TraerTodasLasMesas();
-        $mensajes[] = array("mensaje"=>"API=>GET");
-        $resultado = array_merge($mensajes,$todasLasMesas,);
-        $newResponse = $response->withJson($resultado, 200);  
-        return $newResponse;
+        $lista = Mesa::all();
+        $payload = json_encode(array("listaMesa" => $lista));
+
+        $response->getBody()->write($payload);
+        return $response
+          ->withHeader('Content-Type', 'application/json');
     }
 
     public function CargarUno($request, $response, $args) {
-        $ArrayDeParametros = $request->getParsedBody();
-        $numero = $ArrayDeParametros['numero'];
-        $estado = $ArrayDeParametros['estado'];
-        $miMesa = new Mesa();
-        $miMesa->__construct1($numero,$estado);
-        $miMesa->InsertarMesaParametros();
-        $response->getBody()->write("se guardo la mesa" . "\n");
-        $resultado = array("mensaje"=>"API=>POST");
-        $newResponse = $response->withJson($resultado,200);
-        return $newResponse;
+        $parametros = $request->getParsedBody();
+        $cadena = '0123456789abcdefghijklmnopqrstuvwxyz';
+        $numero = substr(str_shuffle($cadena),0,5);
+        // Creamos la Mesa
+        $mesa = new Mesa();
+        $mesa->numero = $numero;
+        $mesa->estado = 'cerrada';
+        $mesa->save();
+
+        $payload = json_encode(array("mensaje" => "Mesa creada con exito"));
+
+        $response->getBody()->write($payload);
+        return $response
+            ->withHeader('Content-Type', 'application/json');
     }
 
     public function BorrarUno($request, $response, $args) {
-        $id=$args['id'];
-        $miMesa= new Mesa();
-        $miMesa->id=$id;
-        $cantidadDeBorrados=$miMesa->BorrarMesa();
-        $objDelaRespuesta= new stdclass();
-        $objDelaRespuesta->cantidad=$cantidadDeBorrados;
-        if($cantidadDeBorrados>0)
-        {
-            $objDelaRespuesta->resultado="Se borro la mesa";
-        }
-        else
-        {
-            $objDelaRespuesta->resultado="No se borro la Mesa";
-        }
-        $newResponse = $response->withJson($objDelaRespuesta, 200);  
-        return $newResponse;
+        $mesaId = $args['id'];
+        $mesa = Mesa::find($mesaId);
+        $mesa->delete();
+        $payload = json_encode(array("mensaje" => "Mesa borrada con exito"));
+        $response->getBody()->write($payload);
+        return $response
+          ->withHeader('Content-Type', 'application/json');
     }
 
    public function ModificarUno($request, $response, $args) {
-        $ArrayDeParametros = $request->getParsedBody();   	
-        $miMesa = new Mesa();
-        $numero = $ArrayDeParametros['numero'];
-        $estado = $ArrayDeParametros['estado'];
-        $miMesa->__construct1($numero,$estado);
-        $miMesa->id=$ArrayDeParametros['id'];
+    $parametros = $request->getParsedBody();
+    $mesaId = $parametros['id'];
+    if($parametros['estado'] == 'cerrada' || $parametros['estado'] == 'con cliente esperando pedido' || $parametros['estado'] == 'con cliente comiendo'
+    || $parametros['estado'] == 'con cliente pagando')
+    {
+        $estado = $parametros['estado'];
+    }else
+    {
+        $estado = 'cerrada';
+    }
+    // Conseguimos el objeto
+    $mesa = Mesa::where('id', '=', $mesaId)->first();
+
+    // Si existe
+    if ($mesa !== null) {
+        $mesa->estado = $estado;
+        $mesa->save();
+        $payload = json_encode(array("mensaje" => "Estado de la mesa modificado con exito"));
         
-        $resultado =$miMesa->ModificarMesaParametros();
-        $objDelaRespuesta= new stdclass();
-        $objDelaRespuesta->resultado=$resultado;
-        return $response->withJson($objDelaRespuesta, 200);		
+    } else {
+      $payload = json_encode(array("mensaje" => "Mesa no encontrada"));
+    }
+
+    $response->getBody()->write($payload);
+    return $response
+      ->withHeader('Content-Type', 'application/json');		
     }
 
 }

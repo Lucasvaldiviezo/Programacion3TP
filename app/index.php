@@ -78,7 +78,7 @@ $app->group('/mesa', function () {
  
   $this->get('/', \mesaApi::class . ':TraerTodos');
  
-  $this->get('/{numero}', \mesaApi::class . ':TraerUno');
+  $this->get('/{id}', \mesaApi::class . ':TraerUno');
 
   $this->post('/', \mesaApi::class . ':CargarUno');
 

@@ -57,33 +57,33 @@ class ClienteApi implements IApiUsable
           ->withHeader('Content-Type', 'application/json');
     }
 
-   public function ModificarUno($request, $response, $args) {
-    $parametros = $request->getParsedBody();
-    $nombreModificado = $parametros['nombre'];
-    $apellidoModificado = $parametros['apellido'];
-    $mailModificado = $parametros['mail'];
-    $dniModificado = $parametros['dni'];
-    $cliId = $parametros['id'];
+    public function ModificarUno($request, $response, $args) {
+        $parametros = $request->getParsedBody();
+        $nombreModificado = $parametros['nombre'];
+        $apellidoModificado = $parametros['apellido'];
+        $mailModificado = $parametros['mail'];
+        $dniModificado = $parametros['dni'];
+        $cliId = $parametros['id'];
 
-    // Conseguimos el objeto
-    $cli = Cliente::where('id', '=', $cliId)->first();
+        // Conseguimos el objeto
+        $cli = Cliente::where('id', '=', $cliId)->first();
 
-    // Si existe
-    if ($cli !== null) {
-        $cli->nombre = $nombreModificado;
-        $cli->apellido = $apellidoModificado;
-        $cli->mail = $mailModificado;
-        $cli->dni = $dniModificado;
-        $cli->save();
-        $payload = json_encode(array("mensaje" => "Cliente modificado con exito"));
-        
-    } else {
-      $payload = json_encode(array("mensaje" => "Cliente no encontrado"));
-    }
+        // Si existe
+        if ($cli !== null) {
+            $cli->nombre = $nombreModificado;
+            $cli->apellido = $apellidoModificado;
+            $cli->mail = $mailModificado;
+            $cli->dni = $dniModificado;
+            $cli->save();
+            $payload = json_encode(array("mensaje" => "Cliente modificado con exito"));
+            
+        } else {
+        $payload = json_encode(array("mensaje" => "Cliente no encontrado"));
+        }
 
-    $response->getBody()->write($payload);
-    return $response
-      ->withHeader('Content-Type', 'application/json');	
+        $response->getBody()->write($payload);
+        return $response
+        ->withHeader('Content-Type', 'application/json');	
     }
 }
 
