@@ -2,6 +2,7 @@
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use Illuminate\Database\Capsule\Manager as Capsule;
+date_default_timezone_set('America/Argentina/Buenos_Aires');
 
 require_once './vendor/autoload.php';
 require_once './clases/AccesoDatos.php';
@@ -92,7 +93,7 @@ $app->group('/pedido', function () {
  
   $this->get('/', \pedidoApi::class . ':TraerTodos');
  
-  $this->get('/{numero}', \pedidoApi::class . ':TraerUno');
+  $this->get('/{id}', \pedidoApi::class . ':TraerUno');
 
   $this->post('/', \pedidoApi::class . ':CargarUno');
 

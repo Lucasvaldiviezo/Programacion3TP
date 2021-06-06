@@ -59,19 +59,26 @@ class PedidoApi implements IApiUsable
         if($empleado != null && $cliente != null && $mesa != null)
         {
             $total = 0;
+            $datosProductos = "";
             $checkeoProducto = true;
             foreach($productos->Productos as $prod)
             {
                 $auxProd = Producto::where('id', $prod->id)->first();
-                if($auxProd == null)
+                if($auxProd != null && $auxProd->stock >= $prod->cantidad)
+                {
+                    $total += $auxProd->precio * $prod->cantidad;
+                    $datosProductos = $datosProductos . "Id: " . $prod->id . " - Cantidad: " . $prod->cantidad . " / ";
+                }else
                 {
                     $checkeoProducto = false;
                     break;
                 }
-                $total += $auxProd->precio * $prod->cantidad;
+                
             }
             if($checkeoProducto)
             {
+                $mesa->estado = "con cliente esperando pedido";
+                $mesa->save();
                 // Creamos el pedido
                 $ped = new Pedido();
                 $ped->codigo = $codigo;
@@ -82,9 +89,22 @@ class PedidoApi implements IApiUsable
                 $ped->puesto = $puesto;
                 $ped->fecha_hora_creacion = date("y-m-d H:i:s");
                 $ped->ultima_modificacion = date("H:i:s");
-                $ped->total = $total;
+                $ped->total = "$" . $total;
+                $ped->datos_productos = $datosProductos;
                 $ped->save();
                 $payload = json_encode(array("mensaje" => "Pedido creado con exito"));
+
+                //Descontamos el stock
+                foreach($productos->Productos as $prod)
+                {
+                    $auxProd = Producto::where('id', $prod->id)->first();
+                    if($auxProd != null)
+                    {
+                        $auxProd->stock = $auxProd->stock - $prod->cantidad;
+                        $auxProd->save();
+                    }
+                
+                }
             }else
             {
                 $payload = json_encode(array("mensaje" => "No hay stock o no existe el producto"));
@@ -101,7 +121,7 @@ class PedidoApi implements IApiUsable
 
     public function BorrarUno($request, $response, $args) {
         $pedidoId = $args['id'];
-        $pedido = Empleado::find($pedidoId);
+        $pedido = Pedido::find($pedidoId);
         $pedido->delete();
         $payload = json_encode(array("mensaje" => "Pedido borrado con exito"));
         $response->getBody()->write($payload);
@@ -110,18 +130,24 @@ class PedidoApi implements IApiUsable
     }
 
     public function ModificarUno($request, $response, $args) {
-        $ArrayDeParametros = $request->getParsedBody();
-        $id = $ArrayDeParametros['id'];
-        $estado = $ArrayDeParametros['estado'];   	
-        $miPedido = new Pedido();
-        $miPedido = Pedido::TraerUnPedidoId($id);
-        $miPedido->id=$id;
-        $miPedido->estado = $estado;
-        
-        $resultado =$miPedido->ModificarEstadoParametros();
-        $objDelaRespuesta= new stdclass();
-        $objDelaRespuesta->resultado=$resultado;
-        return $response->withJson($objDelaRespuesta, 200);		
+        $parametros = $request->getParsedBody();
+        $estado = $parametros['estado'];
+        $pedidoId = $parametros['id'];   
+        $pedido = Pedido::where('id', '=', $pedidoId)->first();
+        //Checkeo
+        if($pedido != null)
+        {
+            $ped->estado = $estado;
+            $ped->save();
+            $payload = json_encode(array("mensaje" => "Pedido modificado con exito"));
+            
+        }else
+        {
+            $payload = json_encode(array("mensaje" => "No existe el pedido"));
+        }
+        $response->getBody()->write($payload);
+        return $response
+            ->withHeader('Content-Type', 'application/json');		
     }
     
 }
