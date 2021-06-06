@@ -44,14 +44,18 @@ class PedidoApi implements IApiUsable
         $productos = json_decode($parametros['json_productos']);
         //$listaProductos = json_decode($productos);
         //var_dump($productos->Productos);
-        if($parametros['puesto'] == 'cocina' || $parametros['puesto'] == 'bar' || $parametros['puesto'] == 'candybar')
+        $puestos = explode(",",$parametros['puesto']);
+        $puestoAux = "";
+        foreach($puestos as $pues)
         {
-            $puesto = $parametros['puesto'];
-        }else
-        {
-            $puesto = 'cocina';
-        }
-        
+            if($pues == 'cocina' || $pues == 'bar' || $pues == 'candybar')
+            {
+                $puestoAux .= "-" . $pues . "- ";
+            }else
+            {
+                $puestoAux .= "-" . "cocina" . "- ";
+            }
+        } 
         //Checkeo
         $empleado = Empleado::where('id', '=', $idEmpleado)->first();
         $cliente = Cliente::where('id', '=', $idCliente)->first();
@@ -86,7 +90,7 @@ class PedidoApi implements IApiUsable
                 $ped->id_mesa = $idMesa;
                 $ped->id_empleado = $idEmpleado;
                 $ped->estado = $estado;
-                $ped->puesto = $puesto;
+                $ped->puesto = $puestoAux;
                 $ped->fecha_hora_creacion = date("y-m-d H:i:s");
                 $ped->ultima_modificacion = date("H:i:s");
                 $ped->total = "$" . $total;
