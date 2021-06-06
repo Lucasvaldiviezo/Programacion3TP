@@ -60,7 +60,7 @@ class PedidoApi implements IApiUsable
         $empleado = Empleado::where('id', '=', $idEmpleado)->first();
         $cliente = Cliente::where('id', '=', $idCliente)->first();
         $mesa = Mesa::where('id', '=', $idMesa)->first();
-        if($empleado != null && $cliente != null && $mesa != null)
+        if($empleado != null && $cliente != null && $mesa != null && $mesa->estado == "cerrada")
         {
             $total = 0;
             $datosProductos = "";
@@ -141,8 +141,39 @@ class PedidoApi implements IApiUsable
         //Checkeo
         if($pedido != null)
         {
-            $ped->estado = $estado;
-            $ped->save();
+            $mesa = Mesa::where('id',"=",$pedido->id_mesa)->first();
+            if($estado == "listo para servir")
+            {
+                $pedido->puesto = "-mozo-";
+                $pedido->estado = $estado;
+                $pedido->ultima_modificacion = date("H:i:s");
+                $pedido->save();
+            }else if($estado == "servido")
+            {
+                $pedido->puesto = "-mesa-";
+                $pedido->estado = $estado;
+                $mesa->estado = "con cliente comiendo";
+                $pedido->ultima_modificacion = date("H:i:s");
+                $pedido->save();
+                $mesa->save();
+            }else if($estado == "pagando")
+            {
+                $pedido->puesto = "-mesa-";
+                $pedido->estado = $estado;
+                $mesa->estado = "con cliente pagando";
+                $pedido->ultima_modificacion = date("H:i:s");
+                $pedido->save();
+                $mesa->save();
+            }else
+            {
+                $pedido->puesto = "mesa";
+                $pedido->estado = "pagado";
+                $mesa->estado = "cerrada";
+                $pedido->ultima_modificacion = date("H:i:s");
+                $pedido->save();
+                $mesa->save();
+            }
+            
             $payload = json_encode(array("mensaje" => "Pedido modificado con exito"));
             
         }else
