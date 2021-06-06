@@ -1,37 +1,72 @@
 <?php
 
-require_once './clases/pedido.php';
+require_once './models/pedido.php';
 require_once 'IApiUsable.php';
+/*require_once "./apis/empleadoApi.php";
+require_once "./apis/clienteApi.php";
+require_once "./apis/productoApi.php";
+require_once "./apis/mesaApi.php";*/
+
+use \App\Models\Pedido as Pedido;
 
 class PedidoApi extends Pedido implements IApiUsable
 {
     public function TraerUno($request, $response, $args) {
-        $numero=$args['numero'];
-        $elPedido=Pedido::TraerUnPedidoNumeroMesa($numero);
-        $newResponse = $response->withJson($elPedido, 200);  
-        return $newResponse;
+        $ped=$args['id'];
+        $pedido = Pedido::where('id', $ped)->first();
+        $payload = json_encode($pedido);
+        $response->getBody()->write($payload);
+        
+        return $response
+         ->withHeader('Content-Type', 'application/json');
     }
 
     public function TraerTodos($request, $response, $args) {
-        $todosLosPedidos=Pedido::TraerTodosLosPedidos();
-        $newResponse = $response->withJson($todosLosPedidos, 200);  
-        return $newResponse;
+        $lista = Pedido::all();
+        $payload = json_encode(array("listaPedido" => $lista));
+        $response->getBody()->write($payload);
+        return $response
+          ->withHeader('Content-Type', 'application/json');
     }
 
     public function CargarUno($request, $response, $args) {
-        $ArrayDeParametros = $request->getParsedBody();
-        $idCliente = $ArrayDeParametros['idCliente'];
-        $idMesa = $ArrayDeParametros['idMesa'];
-        $idProducto = $ArrayDeParametros['idProducto'];
-        $cantidad = $ArrayDeParametros['cantidad'];
-        $estado = $ArrayDeParametros['estado'];
-        $miPedido = new Pedido();
-        $miPedido->__construct1($idCliente,$idMesa,$idProducto,$cantidad,$estado);
-        $miPedido->InsertarPedidoParametros();
-        
-        $response->getBody()->write("se guardo el pedido" . "\n");
-
-        return $response;
+        $parametros = $request->getParsedBody();
+        $cadena = '0123456789abcdefghijklmnopqrstuvwxyz';
+        $codigo = substr(str_shuffle($cadena),0,5);
+        $idCliente == $parametros['id_cliente'];
+        $idMesa == $parametros['id_mesa'];
+        $idEmpleado == $parametros['id_empleado'];
+        $estado == 'en preparacion';
+        if($parametros['puesto'] == 'cocina' || $parametros['puesto'] == 'bar' || $parametros['puesto'] == 'candybar')
+        {
+            $puesto = $parametros['puesto'];
+        }else
+        {
+            $puesto = 'cocina';
+        }
+        $empleado = Empleado::where('id', '=', $idEmpleado)->first();
+        $cliente = Cliente::where('id', '=', $idCliente)->first();
+        $mesa = Cliente::where('id', '=', $idMesa)->first();
+        if($empleado != null && $cliente != null && $mesa != null)
+        {
+            // Creamos el pedido
+            $ped = new Pedido();
+            $ped->codigo = $codigo;
+            $ped->id_cliente = $idCliente;
+            $ped->id_mesa = $idMesa;
+            $ped->id_empleado = $idEmpleado;
+            $ped->estado = $estado;
+            $ped->puesto = $puesto;
+            $ped->fecha_hora_creacion = 
+            $ped->save();
+            $payload = json_encode(array("mensaje" => "Pedido creado con exito"));
+        }else
+        {
+            $payload = json_encode(array("mensaje" => "Datos erroneos"));
+        }
+        $response->getBody()->write($payload);
+        return $response
+            ->withHeader('Content-Type', 'application/json');
     }
 
     public function BorrarUno($request, $response, $args) {

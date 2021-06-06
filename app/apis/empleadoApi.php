@@ -41,7 +41,7 @@ class EmpleadoApi implements IApiUsable
         {
             $puesto = 'mozo';
         }
-        // Creamos el usuario
+        // Creamos el empleado
         $emp = new Empleado();
         $emp->nombre = $nombre;
         $emp->apellido = $apellido;
