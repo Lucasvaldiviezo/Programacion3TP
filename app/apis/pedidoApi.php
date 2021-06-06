@@ -57,7 +57,8 @@ class PedidoApi extends Pedido implements IApiUsable
             $ped->id_empleado = $idEmpleado;
             $ped->estado = $estado;
             $ped->puesto = $puesto;
-            $ped->fecha_hora_creacion = 
+            $ped->fecha_hora_creacion = date("y-m-d / H:i:s")
+            $ped->ultima_modificacion = date("H:i:s")
             $ped->save();
             $payload = json_encode(array("mensaje" => "Pedido creado con exito"));
         }else
@@ -70,22 +71,13 @@ class PedidoApi extends Pedido implements IApiUsable
     }
 
     public function BorrarUno($request, $response, $args) {
-        $id=$args['id'];
-        $miPedido= new Pedido();
-        $miPedido->id=$id;
-        $cantidadDeBorrados=$miPedido->BorrarPedido();
-        $objDelaRespuesta= new stdclass();
-        $objDelaRespuesta->cantidad=$cantidadDeBorrados;
-        if($cantidadDeBorrados>0)
-        {
-            $objDelaRespuesta->resultado="Se borro el pedido";
-        }
-        else
-        {
-            $objDelaRespuesta->resultado="No se borro el pedido";
-        }
-        $newResponse = $response->withJson($objDelaRespuesta, 200);  
-        return $newResponse;
+        $pedidoId = $args['id'];
+        $pedido = Empleado::find($pedidoId);
+        $pedido->delete();
+        $payload = json_encode(array("mensaje" => "Pedido borrado con exito"));
+        $response->getBody()->write($payload);
+        return $response
+          ->withHeader('Content-Type', 'application/json');
     }
 
     public function ModificarUno($request, $response, $args) {
@@ -102,23 +94,6 @@ class PedidoApi extends Pedido implements IApiUsable
         $objDelaRespuesta->resultado=$resultado;
         return $response->withJson($objDelaRespuesta, 200);		
     }
-
-    /*public function ModificarUno($request, $response, $args) {
-        $ArrayDeParametros = $request->getParsedBody();   	
-        $miPedido = new Pedido();
-        $nombreCliente = $ArrayDeParametros['nombreCliente'];
-        $numeroMesa = $ArrayDeParametros['numeroMesa'];
-        $nombreProducto = $ArrayDeParametros['nombreProducto'];
-        $cantidad = $ArrayDeParametros['cantidad'];
-        $estado = $ArrayDeParametros['estado'];
-        $miPedido->__construct1($nombreCliente,$numeroMesa,$nombreProducto,$cantidad,$estado);
-        $miPedido->id=$ArrayDeParametros['id'];
-        
-        $resultado =$miPedido->ModificarPedidoParametros();
-        $objDelaRespuesta= new stdclass();
-        $objDelaRespuesta->resultado=$resultado;
-        return $response->withJson($objDelaRespuesta, 200);		
-    }*/
     
 }
 
