@@ -164,10 +164,18 @@ class PedidoApi implements IApiUsable
                 $pedido->ultima_modificacion = date("H:i:s");
                 $pedido->save();
                 $mesa->save();
-            }else
+            }else if($estado == "pagado")
             {
                 $pedido->puesto = "mesa";
                 $pedido->estado = "pagado";
+                $mesa->estado = "cerrada";
+                $pedido->ultima_modificacion = date("H:i:s");
+                $pedido->save();
+                $mesa->save();
+            }else
+            {
+                $pedido->puesto = "mozo";
+                $pedido->estado = "por definir";
                 $mesa->estado = "cerrada";
                 $pedido->ultima_modificacion = date("H:i:s");
                 $pedido->save();

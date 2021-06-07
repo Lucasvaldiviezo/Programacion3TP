@@ -336,7 +336,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost/Programacion3TP/app/index.php/mesa/",
+							"raw": "http://localhost/Programacion3TP/app/index.php/mesa/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -346,7 +346,7 @@
 								"app",
 								"index.php",
 								"mesa",
-								""
+								"1"
 							],
 							"query": [
 								{
@@ -424,8 +424,18 @@
 			"name": "Pedido",
 			"item": [
 				{
-					"name": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/pedido/",
+					"name": "http://localhost/Programacion3TP/app/index.php/pedido/",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjMwNDEwNjIsImV4cCI6MTYyMzA0NDY2MiwiYXVkIjoiNzliYmM1MGMwMWEyZTVkMzc3MTUzZTY5MGE1OTgxNmFhY2Q0Njc0ZCIsImRhdGEiOnsidXN1YXJpbyI6Im1hdXJvQG1hdXJvLmNvbSIsInBlcmZpbCI6ImJhcnRlbmRlciIsImNsYXZlIjoiY29udHJhc2VcdTAwZjFhMTIzIn0sImFwcCI6IkFQSSBSRVNUIFJFU1RBVVJBTlQgMjAyMSJ9.v6I_FHINMnZ-H7w1ENtj-1O2WWV5UyForb-k5RXtOio",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -433,39 +443,40 @@
 							"formdata": [
 								{
 									"key": "idMesa",
-									"value": "8",
+									"value": "2",
 									"type": "text"
 								},
 								{
-									"key": "idProducto",
-									"value": "1",
-									"type": "text"
-								},
-								{
-									"key": "cantidad",
-									"value": "3",
-									"type": "text"
-								},
-								{
-									"key": "estado",
-									"value": "",
+									"key": "json_productos",
+									"value": "{\"Productos\":[{ \"id\":\"2\",\"cantidad\":\"4\"},{ \"id\":\"1\",\"cantidad\":\"1\"}]}",
 									"type": "text"
 								},
 								{
 									"key": "idCliente",
 									"value": "1",
 									"type": "text"
+								},
+								{
+									"key": "puesto",
+									"value": "cocina,bar",
+									"type": "text"
+								},
+								{
+									"key": "idEmpleado",
+									"value": "1",
+									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost/Programacion3TP/index.php/pedido/",
+							"raw": "http://localhost/Programacion3TP/app/index.php/pedido/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"path": [
 								"Programacion3TP",
+								"app",
 								"index.php",
 								"pedido",
 								""
@@ -475,41 +486,19 @@
 					"response": []
 				},
 				{
-					"name": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/pedido/10",
+					"name": "http://localhost/Programacion3TP/app/index.php/pedido/",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/pedido/10",
+							"raw": "http://localhost/Programacion3TP/app/index.php/pedido/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"path": [
-								"APIREST-PHP-POO2021",
-								"Programacion3-TP",
-								"index.php",
-								"pedido",
-								"10"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/pedido/",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/pedido/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"path": [
-								"APIREST-PHP-POO2021",
-								"Programacion3-TP",
+								"Programacion3TP",
+								"app",
 								"index.php",
 								"pedido",
 								""
@@ -519,8 +508,40 @@
 					"response": []
 				},
 				{
-					"name": "http://localhost/Programacion3TP/index.php/pedido/",
+					"name": "http://localhost/Programacion3TP/app/index.php/pedido/2",
 					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/Programacion3TP/app/index.php/pedido/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Programacion3TP",
+								"app",
+								"index.php",
+								"pedido",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost/Programacion3TP/app/index.php/pedido/",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjMwNDE0MTEsImV4cCI6MTYyMzA0NTAxMSwiYXVkIjoiNzliYmM1MGMwMWEyZTVkMzc3MTUzZTY5MGE1OTgxNmFhY2Q0Njc0ZCIsImRhdGEiOnsidXN1YXJpbyI6Im5pY29Abmljby5jb20iLCJwZXJmaWwiOiJzb2NpbyIsImNsYXZlIjoiMTIzYXNkIn0sImFwcCI6IkFQSSBSRVNUIFJFU1RBVVJBTlQgMjAyMSJ9.bfrIaTgnoIppI00vypzERw4EWBZCz2dB_YYb_ER9tH0",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -528,24 +549,25 @@
 							"urlencoded": [
 								{
 									"key": "estado",
-									"value": "Entregado",
+									"value": "servido",
 									"type": "text"
 								},
 								{
 									"key": "id",
-									"value": "18",
+									"value": "1",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost/Programacion3TP/index.php/pedido/",
+							"raw": "http://localhost/Programacion3TP/app/index.php/pedido/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"path": [
 								"Programacion3TP",
+								"app",
 								"index.php",
 								"pedido",
 								""
@@ -555,22 +577,22 @@
 					"response": []
 				},
 				{
-					"name": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/pedido/7",
+					"name": "http://localhost/Programacion3TP/app/index.php/pedido/2",
 					"request": {
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost/APIREST-PHP-POO2021/Programacion3-TP/index.php/pedido/7",
+							"raw": "http://localhost/Programacion3TP/app/index.php/pedido/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"path": [
-								"APIREST-PHP-POO2021",
-								"Programacion3-TP",
+								"Programacion3TP",
+								"app",
 								"index.php",
 								"pedido",
-								"7"
+								"2"
 							]
 						}
 					},
@@ -718,6 +740,48 @@
 								"app",
 								"index.php",
 								"empleado",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "http://localhost/Programacion3TP/app/index.php/login/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "mail",
+									"value": "nico@nico.com",
+									"type": "text"
+								},
+								{
+									"key": "clave",
+									"value": "123asd",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/Programacion3TP/app/index.php/login/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Programacion3TP",
+								"app",
+								"index.php",
+								"login",
 								""
 							]
 						}

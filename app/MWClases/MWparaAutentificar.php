@@ -63,15 +63,30 @@ class MWparaAutentificar
 			$response = $next($request, $response);
 		}else if($request->isPost() || $request->isPut())
 		{
-			$payload=AutentificadorJWT::ObtenerData($token);
-			if($payload->perfil=="cocinero" || $payload->perfil=="bartender" || $payload->perfil=="candybar" || $payload->perfil=="socio" )
+			$ruta = $_SERVER['PATH_INFO'];
+			if(strpos($ruta, 'pedido') && $request->isPut())
+			{
+				$parametros = $request->getParsedBody();
+				$payload=AutentificadorJWT::ObtenerData($token);
+				if($parametros['estado'] == "pagado")
+				{
+					if($payload->perfil=="socio")
+					{
+						$response = $next($request, $response);
+					}else
+					{
+						$objDelaRespuesta->respuesta="Solo socios";
+					}
+				}		           	
+				else
+				{	
+					$response = $next($request, $response);
+				}
+			}else
 			{
 				$response = $next($request, $response);
-			}		           	
-			else
-			{	
-				$objDelaRespuesta->respuesta="Solo socios" . $payload->perfil;
 			}
+			
 		}else
 		{
 			$payload=AutentificadorJWT::ObtenerData($token);
