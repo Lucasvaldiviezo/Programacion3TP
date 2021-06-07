@@ -11,6 +11,7 @@ require_once './apis/productoApi.php';
 require_once './apis/mesaApi.php';
 require_once './apis/pedidoApi.php';
 require_once './apis/clienteApi.php';
+require_once './apis/manejoArchivos.php';
 require './MWClases/MWparaAutentificar.php';
 require './MWClases/MWparaCORS.php';
 
@@ -114,6 +115,14 @@ $app->group('/cliente', function () {
   $this->delete('/{id}', \clienteApi::class . ':BorrarUno');
 
   $this->put('/', \clienteApi::class . ':ModificarUno');
+     
+})->add(\MWparaAutentificar::class . ':VerificarUsuario');
+
+$app->group('/guardar', function () {
+ 
+  $this->get('/{tipo}', \manejoArchivos::class . ':GuardarDatos');
+
+  //$this->get('/{id}', \clienteApi::class . ':TraerUno');
      
 })->add(\MWparaAutentificar::class . ':VerificarUsuario');
 
