@@ -43,30 +43,54 @@ class MWparaAutentificar
   }
   
   public function VerificarUsuario($request, $response, $next) {
-	if($request->isGet())
+	
+	$datos = $request->getParsedBody();
+	$token = $datos['token'];	 
+	$objDelaRespuesta= new stdclass();
+	$objDelaRespuesta->respuesta="";
+	try 
 	{
-	   	$response = $next($request, $response);
-		$response->getBody()->write('<p>No valido credenciales al ser por GET</p>' . "\n");
+		AutentificadorJWT::verificarToken($token);
+		$objDelaRespuesta->esValido=true;      
 	}
-	else
+	catch (Exception $e) {      
+		$objDelaRespuesta->excepcion=$e->getMessage();
+		$objDelaRespuesta->esValido=false;     
+	} 
+	if($objDelaRespuesta->esValido)
 	{
-	  $response->getBody()->write('<p>verifico credenciales</p>');
-	  $ArrayDeParametros = $request->getParsedBody();
-	  $usuario = json_decode($ArrayDeParametros["obj_json"]);
-	  $nombre=$usuario->nombre;
-	  $perfil=$usuario->perfil;
-	  if($perfil=="administrador")
-	  {
-		//$response->getBody()->write("<h3>Bienvenido $nombre </h3>");
-		$response = $next($request, $response);
-		$response->getBody()->write("\n<h3>Bienvenido $nombre </h3> \n");
-	  }
-	  else
-	  {
-		$response->getBody()->write('<p>no tenes habilitado el ingreso</p>');
-	  }  
+		if($request->isGet())
+		{
+			$response = $next($request, $response);
+		}else if($request->isPost() && $request->isPut())
+		{
+
+		}else
+		{
+			$payload=AutentificadorJWT::ObtenerData($token);
+			// DELETE sirve para socio
+			if($payload->perfil=="socio")
+			{
+				$response = $next($request, $response);
+			}		           	
+			else
+			{	
+				$objDelaRespuesta->respuesta="Solo socios";
+			}
+		}
+	   	
+	}else
+	{
+		$objDelaRespuesta->respuesta="Solo usuarios registrados";
+		$objDelaRespuesta->elToken=$token;
 	}
-	$response->getBody()->write('<p>vuelvo del verificador de credenciales</p>');
+
+	if($objDelaRespuesta->respuesta!="")
+	{
+		$nueva=$response->withJson($objDelaRespuesta, 401);  
+		return $nueva;
+	}
+	
 	return $response;   
 }
 }
