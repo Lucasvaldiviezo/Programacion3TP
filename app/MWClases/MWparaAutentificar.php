@@ -43,9 +43,8 @@ class MWparaAutentificar
   }
   
   public function VerificarUsuario($request, $response, $next) {
-	
-	$datos = $request->getParsedBody();
-	$token = $datos['token'];	 
+	$header = $request->getHeaderLine('Authorization');
+    $token = trim(explode("Bearer", $header)[1]);	 
 	$objDelaRespuesta= new stdclass();
 	$objDelaRespuesta->respuesta="";
 	try 
@@ -62,9 +61,17 @@ class MWparaAutentificar
 		if($request->isGet())
 		{
 			$response = $next($request, $response);
-		}else if($request->isPost() && $request->isPut())
+		}else if($request->isPost() || $request->isPut())
 		{
-
+			$payload=AutentificadorJWT::ObtenerData($token);
+			if($payload->perfil=="cocinero" || $payload->perfil=="bartender" || $payload->perfil=="candybar" || $payload->perfil=="socio" )
+			{
+				$response = $next($request, $response);
+			}		           	
+			else
+			{	
+				$objDelaRespuesta->respuesta="Solo socios" . $payload->perfil;
+			}
 		}else
 		{
 			$payload=AutentificadorJWT::ObtenerData($token);
@@ -74,7 +81,8 @@ class MWparaAutentificar
 				$response = $next($request, $response);
 			}		           	
 			else
-			{	
+			{
+
 				$objDelaRespuesta->respuesta="Solo socios";
 			}
 		}

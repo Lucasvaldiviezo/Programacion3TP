@@ -59,7 +59,7 @@ $app->group('/empleado', function () {
 
   $this->put('/', \empleadoApi::class . ':ModificarUno');
      
-})/*->add(\MWparaAutentificar::class . ':VerificarUsuario')*/;
+})->add(\MWparaAutentificar::class . ':VerificarUsuario');
 
 $app->group('/producto', function () {
  
@@ -73,7 +73,7 @@ $app->group('/producto', function () {
 
   $this->put('/', \productoApi::class . ':ModificarUno');
      
-})/*->add(\MWparaAutentificar::class . ':VerificarUsuario')*/;
+})->add(\MWparaAutentificar::class . ':VerificarUsuario');
 
 $app->group('/mesa', function () {
  
@@ -87,7 +87,7 @@ $app->group('/mesa', function () {
 
   $this->put('/', \mesaApi::class . ':ModificarUno');
      
-})/*->add(\MWparaAutentificar::class . ':VerificarUsuario')*/;
+})->add(\MWparaAutentificar::class . ':VerificarUsuario');
 
 $app->group('/pedido', function () {
  
@@ -101,7 +101,7 @@ $app->group('/pedido', function () {
 
   $this->put('/', \pedidoApi::class . ':ModificarUno');
      
-})/*->add(\MWparaAutentificar::class . ':VerificarUsuario')*/;
+})->add(\MWparaAutentificar::class . ':VerificarUsuario');
 
 $app->group('/cliente', function () {
  
@@ -115,7 +115,7 @@ $app->group('/cliente', function () {
 
   $this->put('/', \clienteApi::class . ':ModificarUno');
      
-})/*->add(\MWparaAutentificar::class . ':VerificarUsuario')*/;
+})->add(\MWparaAutentificar::class . ':VerificarUsuario');
 
 $app->run();
 
