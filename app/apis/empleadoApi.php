@@ -1,8 +1,10 @@
 <?php
 require_once './models/empleado.php';
+require_once 'changelogApi.php';
 require_once 'IApiUsable.php';
 
 use \App\Models\Empleado as Empleado;
+use \App\Models\Changelog as Changelog;
 
 class EmpleadoApi implements IApiUsable
 {
@@ -11,7 +13,13 @@ class EmpleadoApi implements IApiUsable
         $empleado = Empleado::where('id', $emp)->first();
         $payload = json_encode($empleado);
         $response->getBody()->write($payload);
-        
+        //Obtengo el empleado
+        $header = $request->getHeaderLine('Authorization');
+        $token = trim(explode("Bearer", $header)[1]);
+        $data = AutentificadorJWT::ObtenerData($token);
+        $empExistente = Empleado::where('mail', '=', $data->usuario)->first();
+        //Log
+        ChangelogApi::CrearLog("empleados",$empleado->id,$empExistente->id,"Obtener datos","Datos de un empleado");
         return $response
          ->withHeader('Content-Type', 'application/json');
     }
@@ -19,7 +27,13 @@ class EmpleadoApi implements IApiUsable
     public function TraerTodos($request, $response, $args) {
         $lista = Empleado::all();
         $payload = json_encode(array("listaEmpleado" => $lista));
-
+        //Obtengo el empleado
+        $header = $request->getHeaderLine('Authorization');
+        $token = trim(explode("Bearer", $header)[1]);
+        $data = AutentificadorJWT::ObtenerData($token);
+        $empleado = Empleado::where('mail', '=', $data->usuario)->first();
+        //Log
+        ChangelogApi::CrearLog("empleados",0,$empleado->id,"Obtener datos","Datos de todos los empleados");
         $response->getBody()->write($payload);
         return $response
           ->withHeader('Content-Type', 'application/json');
@@ -41,6 +55,11 @@ class EmpleadoApi implements IApiUsable
         {
             $puesto = 'mozo';
         }
+        //Obtengo el empleado
+        $header = $request->getHeaderLine('Authorization');
+        $token = trim(explode("Bearer", $header)[1]);
+        $data = AutentificadorJWT::ObtenerData($token);
+        $empExistente = Empleado::where('mail', '=', $data->usuario)->first();
         // Creamos el empleado
         $emp = new Empleado();
         $emp->nombre = $nombre;
@@ -49,9 +68,10 @@ class EmpleadoApi implements IApiUsable
         $emp->clave = $clave;
         $emp->puesto = $puesto;
         $emp->save();
+        //Log
+        ChangelogApi::CrearLog("empleados",$emp->id,$empExistente->id,"Cargar",$emp->nombre . " " . $emp->puesto);
 
         $payload = json_encode(array("mensaje" => "Empleado creado con exito"));
-
         $response->getBody()->write($payload);
         return $response
             ->withHeader('Content-Type', 'application/json');
@@ -62,6 +82,13 @@ class EmpleadoApi implements IApiUsable
         $empleado = Empleado::find($empleadoId);
         $empleado->delete();
         $payload = json_encode(array("mensaje" => "Empleado borrado con exito"));
+        //Obtengo el empleado
+        $header = $request->getHeaderLine('Authorization');
+        $token = trim(explode("Bearer", $header)[1]);
+        $data = AutentificadorJWT::ObtenerData($token);
+        $empExistente = Empleado::where('mail', '=', $data->usuario)->first();
+        //Log
+        ChangelogApi::CrearLog("empleados",$empleado->id,$empExistente->id,"Borrar","Se realizo el softdelete de la fila");
         $response->getBody()->write($payload);
         return $response
           ->withHeader('Content-Type', 'application/json');
@@ -76,9 +103,13 @@ class EmpleadoApi implements IApiUsable
     $puestoModificado = $parametros['puesto'];
     $empId = $parametros['id'];
 
-    // Conseguimos el objeto
+    //Conseguimos el objeto
     $emp = Empleado::where('id', '=', $empId)->first();
-
+    //Obtengo el empleado que esta realizando la tarea
+    $header = $request->getHeaderLine('Authorization');
+    $token = trim(explode("Bearer", $header)[1]);
+    $data = AutentificadorJWT::ObtenerData($token);
+    $empExistente = Empleado::where('mail', '=', $data->usuario)->first();
     // Si existe
     if ($emp !== null) {
         $emp->nombre = $nombreModificado;
@@ -88,6 +119,8 @@ class EmpleadoApi implements IApiUsable
         $emp->puesto = $puestoModificado;
         $emp->save();
         $payload = json_encode(array("mensaje" => "Empleado modificado con exito"));
+        //Log
+        ChangelogApi::CrearLog("empleados",$emp->id,$empExistente->id,"Modificar",$empleado->nombre . " " . $empleado->puesto);
         
     } else {
       $payload = json_encode(array("mensaje" => "Empleado no encontrado"));
