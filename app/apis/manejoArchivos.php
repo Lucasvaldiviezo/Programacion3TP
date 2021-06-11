@@ -5,14 +5,14 @@ use \App\Models\Empleado as Empleado;
 use \App\Models\Cliente as Cliente;
 use \App\Models\Mesa as Mesa;
 use \App\Models\Producto as Producto;
-use \App\Models\Pedido as Pedido;
 
-class ManejoArchivos implements IApiUsable
+class ManejoArchivos
 {
 
     public function GuardarDatos($request, $response, $next)
     {
-        $tipo=$args['tipo'];
+        $parametros = $request->getParsedBody();
+        $tipo=$parametros['tipo'];
         switch($tipo)
         {
             case 'empleado':
@@ -24,7 +24,7 @@ class ManejoArchivos implements IApiUsable
             case 'cliente':
                 $clientes = Cliente::all();
                 $archivo = fopen("clientes.csv","a");
-                $bool = fwrite($archivo, $this->DatosToCSV($clientes,$tipo)));
+                $bool = fwrite($archivo, $this->DatosToCSV($clientes,$tipo));
                 $payload = json_encode(array("mensaje" => "Se guardo el archivo de clientes"));
             break;
             case 'mesa':

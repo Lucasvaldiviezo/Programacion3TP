@@ -2,6 +2,8 @@
 
 require_once './models/pedido.php';
 require_once 'IApiUsable.php';
+require_once "./MWClases/AutentificadorJWT.php";
+require_once "changelogApi.php";
 /*require_once "./apis/empleadoApi.php";
 require_once "./apis/clienteApi.php";
 require_once "./apis/productoApi.php";
@@ -12,6 +14,7 @@ use \App\Models\Empleado as Empleado;
 use \App\Models\Cliente as Cliente;
 use \App\Models\Mesa as Mesa;
 use \App\Models\Producto as Producto;
+use \App\Models\Changelog as Changelog;
 
 class PedidoApi implements IApiUsable
 {
@@ -20,7 +23,13 @@ class PedidoApi implements IApiUsable
         $pedido = Pedido::where('id', $ped)->first();
         $payload = json_encode($pedido);
         $response->getBody()->write($payload);
-        
+        //Obtengo el empleado
+        $header = $request->getHeaderLine('Authorization');
+        $token = trim(explode("Bearer", $header)[1]);
+        $data = AutentificadorJWT::ObtenerData($token);
+        $empleado = Empleado::where('mail', '=', $data->usuario)->first();
+        //Log
+        ChangelogApi::CrearLog("pedidos",$pedido->id,$empleado->id,"Obtener datos","Datos de un pedido");
         return $response
          ->withHeader('Content-Type', 'application/json');
     }
@@ -29,21 +38,26 @@ class PedidoApi implements IApiUsable
         $lista = Pedido::all();
         $payload = json_encode(array("listaPedido" => $lista));
         $response->getBody()->write($payload);
+        //Obtengo el empleado
+        $header = $request->getHeaderLine('Authorization');
+        $token = trim(explode("Bearer", $header)[1]);
+        $data = AutentificadorJWT::ObtenerData($token);
+        $empleado = Empleado::where('mail', '=', $data->usuario)->first();
+        //Log
+        ChangelogApi::CrearLog("pedidos",0,$empleado->id,"Obtener datos","Datos de todos los pedidos");
         return $response
           ->withHeader('Content-Type', 'application/json');
     }
 
     public function CargarUno($request, $response, $args) {
+        //Obtengo los datos a cargar
         $parametros = $request->getParsedBody();
         $cadena = '0123456789abcdefghijklmnopqrstuvwxyz';
         $codigo = substr(str_shuffle($cadena),0,5);
         $idCliente = $parametros['idCliente'];
         $idMesa = $parametros['idMesa'];
-        $idEmpleado = $parametros['idEmpleado'];
         $estado = 'en preparacion';
         $productos = json_decode($parametros['json_productos']);
-        //$listaProductos = json_decode($productos);
-        //var_dump($productos->Productos);
         $puestos = explode(",",$parametros['puesto']);
         $puestoAux = "";
         foreach($puestos as $pues)
@@ -55,9 +69,13 @@ class PedidoApi implements IApiUsable
             {
                 $puestoAux .= "-" . "cocina" . "- ";
             }
-        } 
-        //Checkeo
-        $empleado = Empleado::where('id', '=', $idEmpleado)->first();
+        }
+        //Obtengo el empleado para el changelog
+        $header = $request->getHeaderLine('Authorization');
+        $token = trim(explode("Bearer", $header)[1]);
+        $data = AutentificadorJWT::ObtenerData($token);
+        //Checkeo que existan los datos a cargar(empleado,mesa y productos)
+        $empleado = Empleado::where('mail', '=', $data->usuario)->first();
         $cliente = Cliente::where('id', '=', $idCliente)->first();
         $mesa = Mesa::where('id', '=', $idMesa)->first();
         if($empleado != null && $cliente != null && $mesa != null && $mesa->estado == "cerrada")
@@ -68,6 +86,7 @@ class PedidoApi implements IApiUsable
             foreach($productos->Productos as $prod)
             {
                 $auxProd = Producto::where('id', $prod->id)->first();
+                //reviso que cada producto tenga el stock de lo que se pide
                 if($auxProd != null && $auxProd->stock >= $prod->cantidad)
                 {
                     $total += $auxProd->precio * $prod->cantidad;
@@ -88,7 +107,7 @@ class PedidoApi implements IApiUsable
                 $ped->codigo = $codigo;
                 $ped->id_cliente = $idCliente;
                 $ped->id_mesa = $idMesa;
-                $ped->id_empleado = $idEmpleado;
+                $ped->id_empleado = $empleado->id;
                 $ped->estado = $estado;
                 $ped->puesto = $puestoAux;
                 $ped->fecha_hora_creacion = date("y-m-d H:i:s");
@@ -97,7 +116,8 @@ class PedidoApi implements IApiUsable
                 $ped->datos_productos = $datosProductos;
                 $ped->save();
                 $payload = json_encode(array("mensaje" => "Pedido creado con exito"));
-
+                //agregamos los cambios al changelog
+                ChangelogApi::CrearLog("pedidos",$ped->id,$empleado->id,"Cargar",$estado);
                 //Descontamos el stock
                 foreach($productos->Productos as $prod)
                 {
@@ -106,6 +126,9 @@ class PedidoApi implements IApiUsable
                     {
                         $auxProd->stock = $auxProd->stock - $prod->cantidad;
                         $auxProd->save();
+                        //log para productos
+                        $descripcion = "Se redujo stock en " . $prod->cantidad;
+                        ChangelogApi::CrearLog("productos",$auxProd->id,$empleado->id,"Reduccion de stock",$descripcion);
                     }
                 
                 }
@@ -129,51 +152,71 @@ class PedidoApi implements IApiUsable
         $pedido->delete();
         $payload = json_encode(array("mensaje" => "Pedido borrado con exito"));
         $response->getBody()->write($payload);
+        //Obtengo el empleado
+        $header = $request->getHeaderLine('Authorization');
+        $token = trim(explode("Bearer", $header)[1]);
+        $data = AutentificadorJWT::ObtenerData($token);
+        $empleado = Empleado::where('mail', '=', $data->usuario)->first();
+        //creamos el log
+        ChangelogApi::CrearLog("pedidos",$pedido->id,$empleado->id,"Eliminar","Se realizo el softdelete de la fila");
         return $response
           ->withHeader('Content-Type', 'application/json');
     }
 
     public function ModificarUno($request, $response, $args) {
+        //Obtengo datos cargados y obtengo el pedido
         $parametros = $request->getParsedBody();
         $estado = $parametros['estado'];
         $pedidoId = $parametros['id'];   
         $pedido = Pedido::where('id', '=', $pedidoId)->first();
+        //Obtengo el token para saber que empleado esta realizando la tarea
+        $header = $request->getHeaderLine('Authorization');
+        $token = trim(explode("Bearer", $header)[1]);
+        $data = AutentificadorJWT::ObtenerData($token);
+        //busco el empleado con la data
+        $empleado = Empleado::where('mail', '=', $data->usuario)->first();
         //Checkeo
         if($pedido != null)
         {
             $mesa = Mesa::where('id',"=",$pedido->id_mesa)->first();
-            if($estado == "listo para servir")
+            switch($estado)
             {
-                $pedido->puesto = "-mozo-";
-                $pedido->estado = $estado;
-                $pedido->ultima_modificacion = date("H:i:s");
-                $pedido->save();
-            }else if($estado == "servido")
-            {
-                $pedido->puesto = "-mesa-";
-                $pedido->estado = $estado;
-                $mesa->estado = "con cliente comiendo";
-                $pedido->ultima_modificacion = date("H:i:s");
-                $pedido->save();
-                $mesa->save();
-            }else if($estado == "pagando")
-            {
-                $pedido->puesto = "-mesa-";
-                $pedido->estado = $estado;
-                $mesa->estado = "con cliente pagando";
-                $pedido->ultima_modificacion = date("H:i:s");
-                $pedido->save();
-                $mesa->save();
-            }else if($estado == "pagado")
-            {
-                $pedido->puesto = "-mesa-";
-                $pedido->estado = "pagado";
-                $mesa->estado = "cerrada";
-                $pedido->ultima_modificacion = date("H:i:s");
-                $pedido->save();
-                $mesa->save();
-            }else
-            {
+                case "listo para servir":
+                    $pedido->id_empleado = $empleado->id;
+                    $pedido->puesto = "-mozo-";
+                    $pedido->estado = $estado;
+                    $pedido->ultima_modificacion = date("H:i:s");
+                    $pedido->save();
+                    
+                break;
+                case "servido":
+                    $pedido->id_empleado = $empleado->id;
+                    $pedido->puesto = "-mesa-";
+                    $pedido->estado = $estado;
+                    $mesa->estado = "con cliente comiendo";
+                    $pedido->ultima_modificacion = date("H:i:s");
+                    $pedido->save();
+                    $mesa->save();
+                break;
+                case "pagando":
+                    $pedido->id_empleado = $empleado->id;
+                    $pedido->puesto = "-mesa-";
+                    $pedido->estado = $estado;
+                    $mesa->estado = "con cliente pagando";
+                    $pedido->ultima_modificacion = date("H:i:s");
+                    $pedido->save();
+                    $mesa->save();
+                break;
+                case "pagado":
+                    $pedido->id_empleado = $empleado->id;
+                    $pedido->puesto = "-mesa-";
+                    $pedido->estado = "pagado";
+                    $mesa->estado = "cerrada";
+                    $pedido->ultima_modificacion = date("H:i:s");
+                    $pedido->save();
+                    $mesa->save();
+                break;
+                default:
                 $pedido->puesto = "-mozo-";
                 $pedido->estado = "por definir";
                 $mesa->estado = "cerrada";
@@ -181,9 +224,8 @@ class PedidoApi implements IApiUsable
                 $pedido->save();
                 $mesa->save();
             }
-            
             $payload = json_encode(array("mensaje" => "Pedido modificado con exito"));
-            
+            ChangelogApi::CrearLog("pedidos",$pedido->id,$empleado->id,"Modificar",$estado);
         }else
         {
             $payload = json_encode(array("mensaje" => "No existe el pedido"));

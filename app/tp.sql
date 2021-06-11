@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-06-2021 a las 06:52:01
+-- Tiempo de generación: 11-06-2021 a las 23:19:46
 -- Versión del servidor: 10.4.19-MariaDB
 -- Versión de PHP: 8.0.6
 
@@ -20,6 +20,34 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `tp`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `changelogs`
+--
+
+CREATE TABLE `changelogs` (
+  `id` int(18) NOT NULL,
+  `tabla_afectada` varchar(50) COLLATE latin1_spanish_ci NOT NULL,
+  `id_afectado` int(18) NOT NULL,
+  `id_empleado` int(18) NOT NULL,
+  `accion` varchar(50) COLLATE latin1_spanish_ci NOT NULL,
+  `descripcion` varchar(150) COLLATE latin1_spanish_ci NOT NULL,
+  `fecha_hora` datetime NOT NULL,
+  `fecha_de_baja` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `changelogs`
+--
+
+INSERT INTO `changelogs` (`id`, `tabla_afectada`, `id_afectado`, `id_empleado`, `accion`, `descripcion`, `fecha_hora`, `fecha_de_baja`) VALUES
+(1, 'pedidos', 2, 3, 'Modificar', 'pagado', '2021-06-11 17:09:00', NULL),
+(2, 'pedidos', 3, 3, 'Modificar', 'pagado', '2021-06-11 17:09:00', NULL),
+(3, 'pedidos', 3, 3, 'Modificar', 'pagado', '2021-06-11 17:30:19', NULL),
+(4, 'pedidos', 0, 3, 'Obtener datos', 'Datos de todos los pedidos', '2021-06-11 17:54:40', NULL),
+(5, 'pedidos', 3, 3, 'Eliminar', 'Se realizo el softdelete de la fila', '2021-06-11 18:17:20', NULL);
 
 -- --------------------------------------------------------
 
@@ -118,7 +146,9 @@ CREATE TABLE `pedidos` (
 --
 
 INSERT INTO `pedidos` (`id`, `codigo`, `id_cliente`, `id_mesa`, `datos_productos`, `id_empleado`, `estado`, `total`, `puesto`, `fecha_hora_creacion`, `ultima_modificacion`, `fecha_de_baja`) VALUES
-(1, '8dz7o', 1, 2, 'Id: 2 - Cantidad: 4 / Id: 1 - Cantidad: 1 / ', 1, 'pagado', '$52', 'mesa', '2021-06-07 01:45:01', '01:50:38', NULL);
+(1, '8dz7o', 1, 2, 'Id: 2 - Cantidad: 4 / Id: 1 - Cantidad: 1 / ', 1, 'pagado', '$52', '-mesa-', '2021-06-07 01:45:01', '17:00:57', NULL),
+(2, '1hrgb', 1, 2, 'Id: 2 - Cantidad: 3 / ', 3, 'pagado', '$33', '-mesa-', '2021-06-11 16:59:42', '17:08:16', NULL),
+(3, 'qcamt', 1, 1, 'Id: 2 - Cantidad: 5 / ', 3, 'pagado', '$55', '-mesa-', '2021-06-11 17:04:22', '17:30:19', '2021-06-11');
 
 -- --------------------------------------------------------
 
@@ -141,12 +171,18 @@ CREATE TABLE `productos` (
 
 INSERT INTO `productos` (`id`, `nombre`, `precio`, `stock`, `tipo`, `fecha_de_baja`) VALUES
 (1, 'Papas Fritas', '8', 288, 'comida', NULL),
-(2, 'Coca Cola', '11', 35, 'bebida', NULL),
+(2, 'Coca Cola', '11', 27, 'bebida', NULL),
 (3, 'Sprite', '6', 200, 'bebida', '2021-06-05');
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `changelogs`
+--
+ALTER TABLE `changelogs`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `clientes`
@@ -183,6 +219,12 @@ ALTER TABLE `productos`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `changelogs`
+--
+ALTER TABLE `changelogs`
+  MODIFY `id` int(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
@@ -204,7 +246,7 @@ ALTER TABLE `mesas`
 -- AUTO_INCREMENT de la tabla `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `id` int(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`

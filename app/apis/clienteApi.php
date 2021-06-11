@@ -1,8 +1,12 @@
 <?php
 require_once './models/cliente.php';
+require_once 'changelogApi.php';
 require_once 'IApiUsable.php';
 
 use \App\Models\Cliente as Cliente;
+use \App\Models\Empleado as Empleado;
+use \App\Models\Changelog as Changelog;
+
 
 class ClienteApi implements IApiUsable
 {
@@ -27,11 +31,15 @@ class ClienteApi implements IApiUsable
 
     public function CargarUno($request, $response, $args) {
         $parametros = $request->getParsedBody();
-
         $nombre = $parametros['nombre'];
         $apellido = $parametros['apellido'];
         $dni = $parametros['dni'];
         $mail = $parametros['mail'];
+        //obtenemos el empleado
+        $header = $request->getHeaderLine('Authorization');
+        $token = trim(explode("Bearer", $header)[1]);
+        $data = AutentificadorJWT::ObtenerData($token);
+        $empleado = Empleado::where('mail', '=', $data->usuario)->first();
         // Creamos el cliente
         $cli = new Cliente();
         $cli->nombre = $nombre;
@@ -39,7 +47,8 @@ class ClienteApi implements IApiUsable
         $cli->mail = $mail;
         $cli->dni = $dni;
         $cli->save();
-
+        //creamos el Log
+        ChangelogApi::CrearLog("cliente",$cli->id,$empleado->id,"Cargar",$nombre . " " . $apellido);
         $payload = json_encode(array("mensaje" => "Cliente creado con exito"));
 
         $response->getBody()->write($payload);
@@ -53,6 +62,13 @@ class ClienteApi implements IApiUsable
         $cliente->delete();
         $payload = json_encode(array("mensaje" => "Cliente borrado con exito"));
         $response->getBody()->write($payload);
+        //obtenemos el empleado
+        $header = $request->getHeaderLine('Authorization');
+        $token = trim(explode("Bearer", $header)[1]);
+        $data = AutentificadorJWT::ObtenerData($token);
+        $empleado = Empleado::where('mail', '=', $data->usuario)->first();
+        //creamos el log
+        ChangelogApi::CrearLog("cliente",$cliente->id,$empleado->id,"Borrar","Se realizo el softdelete de la fila");
         return $response
           ->withHeader('Content-Type', 'application/json');
     }
@@ -85,6 +101,9 @@ class ClienteApi implements IApiUsable
         return $response
         ->withHeader('Content-Type', 'application/json');	
     }
+    
+
+
 }
 
 ?>
