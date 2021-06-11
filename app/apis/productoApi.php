@@ -79,7 +79,7 @@ class ProductoApi implements IApiUsable
         $data = AutentificadorJWT::ObtenerData($token);
         $empleado = Empleado::where('mail', '=', $data->usuario)->first();
         //Log
-        ChangelogApi::CrearLog("productos",$producto->save,$empleado->id,"Borrar","Se realizo el softdelete de la fila");
+        ChangelogApi::CrearLog("productos",$producto->id,$empleado->id,"Borrar","Se realizo el softdelete de la fila");
         $payload = json_encode(array("mensaje" => "Producto borrado con exito"));
         $response->getBody()->write($payload);
         return $response
@@ -110,7 +110,7 @@ class ProductoApi implements IApiUsable
         $producto->tipo = $tipoModificado;
         $producto->save();
         //Log
-        ChangelogApi::CrearLog("productos",$producto->save,$empleado->id,"Modificar","Stock: $stock");
+        ChangelogApi::CrearLog("productos",$producto->id,$empleado->id,"Modificar","Stock: $stock");
         $payload = json_encode(array("mensaje" => "Producto modificado con exito"));
         
     } else {

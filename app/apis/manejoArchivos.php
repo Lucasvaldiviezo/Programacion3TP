@@ -1,10 +1,12 @@
 <?php
+require_once './models/empleado.php';
 
 use \App\Models\Pedido as Pedido;
 use \App\Models\Empleado as Empleado;
 use \App\Models\Cliente as Cliente;
 use \App\Models\Mesa as Mesa;
 use \App\Models\Producto as Producto;
+use \App\Models\Changelog as Changelog;
 
 class ManejoArchivos
 {
@@ -16,35 +18,46 @@ class ManejoArchivos
         switch($tipo)
         {
             case 'empleado':
-                $empleados = Empleados::all();
-                $archivo = fopen("empleados.csv","a");
+                $lista = Empleado::all();
+                $empleados = json_encode(array("listaCompleta" => $lista));
+                $archivo = fopen("./archivos/empleados.csv","a");
                 $bool = fwrite($archivo, $this->DatosToCSV($empleados,$tipo));
                 $payload = json_encode(array("mensaje" => "Se guardo el archivo de empleados"));
             break;
             case 'cliente':
-                $clientes = Cliente::all();
-                $archivo = fopen("clientes.csv","a");
+                $lista = Cliente::all();
+                $clientes = json_encode(array("listaCompleta" => $lista));
+                $archivo = fopen("./archivos/clientes.csv","a");
                 $bool = fwrite($archivo, $this->DatosToCSV($clientes,$tipo));
                 $payload = json_encode(array("mensaje" => "Se guardo el archivo de clientes"));
             break;
             case 'mesa':
-                $mesas = Mesa::all();
-                $archivo = fopen("mesas.csv","a");
+                $lista = Mesa::all();
+                $mesas = json_encode(array("listaCompleta" => $lista));
+                $archivo = fopen("./archivos/mesas.csv","a");
                 $bool = fwrite($archivo, $this->DatosToCSV($mesas,$tipo));
                 $payload = json_encode(array("mensaje" => "Se guardo el archivo de mesas"));
             break;
             case 'producto':
-                $productos = Producto::all();
-                $archivo = fopen("productos.csv","a");
+                $lista = Producto::all();
+                $productos = json_encode(array("listaCompleta" => $lista));
+                $archivo = fopen("./archivos/productos.csv","a");
                 $bool = fwrite($archivo, $this->DatosToCSV($productos,$tipo));
                 $payload = json_encode(array("mensaje" => "Se guardo el archivo de productos"));
             break;
-            default:
-                $pedidos = Pedido::all();
-                $archivo = fopen("pedidos.csv","a");
+            case 'pedido':
+                $lista = Pedido::all();
+                $pedidos = json_encode(array("listaCompleta" => $lista));
+                $archivo = fopen("./archivos/pedidos.csv","a");
                 $bool = fwrite($archivo, $this->DatosToCSV($pedidos,$tipo));
                 $payload = json_encode(array("mensaje" => "Se guardo el archivo de pedidos"));
             break;
+            default:
+                $lista = Changelog::all();
+                $changeLogs = json_encode(array("listaCompleta" => $lista));
+                $archivo = fopen("./archivos/changelogs.csv","a");
+                $bool = fwrite($archivo, $this->DatosToCSV($changeLogs,$tipo));
+                $payload = json_encode(array("mensaje" => "Se guardo el archivo de logs"));
         }
         fclose($archivo);
 
@@ -59,24 +72,46 @@ class ManejoArchivos
 
     public function DatosToCSV($datos,$tipo)
     {
+        $lista = json_decode($datos);
+        $cadena = "";
         switch($tipo)
         {
             case 'empleado':
-                $cadena =  $this->id . "," . $this->nombre . "," . $this->apellido . "," . $this->mail . "," . $this->clave . "," . $this->puesto . ",\n";
+                foreach($lista->listaCompleta as $dato)
+                {
+                    $cadena .= "{" . $dato->id . "," . $dato->nombre . "," . $dato->apellido . "," . $dato->mail . "," . $dato->clave . "," . $dato->puesto . "}" . ",\n";
+                }
             break;
             case 'cliente':
-                $cadena =  $this->id . "," . $this->nombre . "," . $this->apellido . "," . $this->mail . "," . $this->dni . ",\n";
+                foreach($lista->listaCompleta as $dato)
+                {
+                    $cadena .= "{" . $dato->id . "," . $dato->nombre . "," . $dato->apellido . "," . $dato->mail . "," . $dato->dni . "}" .",\n";
+                }
             break;
             case 'mesa':
-                $cadena =  $this->id . "," . $this->numero . "," . $this->estado . ",\n";
+                foreach($lista->listaCompleta as $dato)
+                {
+                    $cadena .= "{" . $dato->id . "," . $dato->numero . "," . $dato->estado . "}" . ",\n";
+                }
             break;
             case 'producto':
-                $cadena =  $this->id . "," . $this->nombre . "," . $this->precio . "," . $this->stock . "," . $this->tipo . ",\n";
+                foreach($lista->listaCompleta as $dato)
+                {
+                    $cadena .=  "{" . $dato->id . "," . $dato->nombre . "," . $dato->precio . "," . $dato->stock . "," . $dato->tipo . "}" . ",\n";
+                }
+            break;
+            case 'pedido':
+                foreach($lista->listaCompleta as $dato)
+                {
+                    $cadena .= "{" . $dato->id . "," . $dato->codigo . "," . $dato->id_cliente . "," . $dato->id_mesa . "," . $dato->datos_productos . "," . $dato->id_empleado . "," .$dato->estado . "," . $dato->total . ",";
+                    $cadena .= $dato->puesto . "," . $dato->fecha_hora_creacion . "," . $dato->ultima_modificacion . "}" . ",\n";
+                }
             break;
             default:
-                $cadena =  $this->id . "," . $this->codigo . "," . $this->id_cliente . "," . $this->id_mesa . "," . $this->datos_productos . "," . $this->id_empleado . $this->estado . $this->total . ",";
-                $cadena .= $this->puesto . "," . $this->fecha_hora_creacion . "," . $this->ultima_modificacion . ",\n";
-            break;
+                foreach($lista->listaCompleta as $dato)
+                {
+                    $cadena .= "{" . $dato->id . "," . $dato->tabla_afectada . "," . $dato->id_afectado . "," . $dato->id_empleado . "," . $dato->accion . "," . $dato->descripcion . "," . $dato->fecha_hora . "}" . ",\n";
+                }
         }
 
         return $cadena;  
