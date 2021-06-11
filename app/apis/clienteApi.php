@@ -1,5 +1,6 @@
 <?php
 require_once './models/cliente.php';
+require_once "./MWClases/AutentificadorJWT.php";
 require_once 'changelogApi.php';
 require_once 'IApiUsable.php';
 

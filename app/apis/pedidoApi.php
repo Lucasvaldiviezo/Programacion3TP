@@ -4,10 +4,6 @@ require_once './models/pedido.php';
 require_once 'IApiUsable.php';
 require_once "./MWClases/AutentificadorJWT.php";
 require_once "changelogApi.php";
-/*require_once "./apis/empleadoApi.php";
-require_once "./apis/clienteApi.php";
-require_once "./apis/productoApi.php";
-require_once "./apis/mesaApi.php";*/
 
 use \App\Models\Pedido as Pedido;
 use \App\Models\Empleado as Empleado;
