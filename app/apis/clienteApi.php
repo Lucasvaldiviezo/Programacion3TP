@@ -15,7 +15,13 @@ class ClienteApi implements IApiUsable
         $cliente = Cliente::where('id', $cli)->first();
         $payload = json_encode($cliente);
         $response->getBody()->write($payload);
-        
+        //Obtengo el empleado
+        $header = $request->getHeaderLine('Authorization');
+        $token = trim(explode("Bearer", $header)[1]);
+        $data = AutentificadorJWT::ObtenerData($token);
+        $empleado = Empleado::where('mail', '=', $data->usuario)->first();
+        //Log
+        ChangelogApi::CrearLog("clientes",$cliente->id,$empleado->id,"Obtener datos","Datos de un cliente");
         return $response
          ->withHeader('Content-Type', 'application/json');
     }
@@ -23,7 +29,13 @@ class ClienteApi implements IApiUsable
     public function TraerTodos($request, $response, $args) {
         $lista = Cliente::all();
         $payload = json_encode(array("listaCliente" => $lista));
-
+        //Obtengo el empleado
+        $header = $request->getHeaderLine('Authorization');
+        $token = trim(explode("Bearer", $header)[1]);
+        $data = AutentificadorJWT::ObtenerData($token);
+        $empleado = Empleado::where('mail', '=', $data->usuario)->first();
+        //Log
+        ChangelogApi::CrearLog("clientes",0,$empleado->id,"Obtener datos","Datos de todos los clientes");
         $response->getBody()->write($payload);
         return $response
           ->withHeader('Content-Type', 'application/json');
@@ -48,7 +60,7 @@ class ClienteApi implements IApiUsable
         $cli->dni = $dni;
         $cli->save();
         //creamos el Log
-        ChangelogApi::CrearLog("cliente",$cli->id,$empleado->id,"Cargar",$nombre . " " . $apellido);
+        ChangelogApi::CrearLog("clientes",$cli->id,$empleado->id,"Cargar",$nombre . " " . $apellido);
         $payload = json_encode(array("mensaje" => "Cliente creado con exito"));
 
         $response->getBody()->write($payload);
@@ -68,7 +80,7 @@ class ClienteApi implements IApiUsable
         $data = AutentificadorJWT::ObtenerData($token);
         $empleado = Empleado::where('mail', '=', $data->usuario)->first();
         //creamos el log
-        ChangelogApi::CrearLog("cliente",$cliente->id,$empleado->id,"Borrar","Se realizo el softdelete de la fila");
+        ChangelogApi::CrearLog("clientes",$cliente->id,$empleado->id,"Borrar","Se realizo el softdelete de la fila");
         return $response
           ->withHeader('Content-Type', 'application/json');
     }
@@ -83,7 +95,11 @@ class ClienteApi implements IApiUsable
 
         // Conseguimos el objeto
         $cli = Cliente::where('id', '=', $cliId)->first();
-
+        //obtenemos el empleado
+        $header = $request->getHeaderLine('Authorization');
+        $token = trim(explode("Bearer", $header)[1]);
+        $data = AutentificadorJWT::ObtenerData($token);
+        $empleado = Empleado::where('mail', '=', $data->usuario)->first();
         // Si existe
         if ($cli !== null) {
             $cli->nombre = $nombreModificado;
@@ -92,7 +108,8 @@ class ClienteApi implements IApiUsable
             $cli->dni = $dniModificado;
             $cli->save();
             $payload = json_encode(array("mensaje" => "Cliente modificado con exito"));
-            
+            //creamos el log
+            ChangelogApi::CrearLog("clientes",$cli->id,$empleado->id,"Modificar","Se modifico el cliente: " . $dniModificado);
         } else {
         $payload = json_encode(array("mensaje" => "Cliente no encontrado"));
         }
