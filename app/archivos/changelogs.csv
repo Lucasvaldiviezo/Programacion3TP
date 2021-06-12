@@ -1,8 +1,0 @@
-{1,pedidos,2,3,Modificar,pagado,2021-06-11 17:09:00},
-{2,pedidos,3,3,Modificar,pagado,2021-06-11 17:09:00},
-{3,pedidos,3,3,Modificar,pagado,2021-06-11 17:30:19},
-{4,pedidos,0,3,Obtener datos,Datos de todos los pedidos,2021-06-11 17:54:40},
-{5,pedidos,3,3,Eliminar,Se realizo el softdelete de la fila,2021-06-11 18:17:20},
-{6,productos,5,3,Cargar,Stock: 50,2021-06-11 19:34:34},
-{7,productos,0,3,Obtener datos,Datos de todos los producto,2021-06-11 19:35:18},
-{8,empleados,0,3,Obtener datos,Datos de todos los empleados,2021-06-11 19:53:58},

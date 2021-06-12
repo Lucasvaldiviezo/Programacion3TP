@@ -12,7 +12,6 @@ require_once './apis/mesaApi.php';
 require_once './apis/pedidoApi.php';
 require_once './apis/clienteApi.php';
 require_once './apis/manejoArchivos.php';
-require_once './models/changelog.php';
 require './MWClases/MWparaAutentificar.php';
 require './MWClases/MWparaCORS.php';
 
