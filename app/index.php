@@ -122,7 +122,7 @@ $app->group('/archivo', function () {
  
   $this->post('/', \manejoArchivos::class . ':GuardarDatos');
 
-  //$this->get('/{id}', \clienteApi::class . ':TraerUno');
+  $this->get('/{tipo}', \manejoArchivos::class . ':LeerCSV');
      
 })->add(\MWparaAutentificar::class . ':VerificarUsuario');
 
