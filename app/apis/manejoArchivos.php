@@ -62,12 +62,14 @@ class ManejoArchivos
                         $mail = $datos[3];
                         $clave = $datos[4];
                         $puesto = $datos[5];
+                        $estado = $datos[6];
                         $empleado = new Empleado();
                         $empleado->nombre = $nombre;
                         $empleado->apellido = $apellido;
                         $empleado->mail = $mail;
                         $empleado->clave = $clave;
                         $empleado->puesto = $puesto;
+                        $empleado->estado = $estado;
                         $empleado->save();
                     }
                 }
@@ -369,7 +371,7 @@ class ManejoArchivos
         switch($tipo)
         {
             case 'empleados':
-                $cadena .= "- ID: " . $datos->id . ", Nombre: " . $datos->nombre . ", Apellido: " . $datos->apellido . ", Mail: " . $datos->mail . ", Clave: " . $datos->clave . ", Puesto: " . $datos->puesto;
+                $cadena .= "- ID: " . $datos->id . ", Nombre: " . $datos->nombre . ", Apellido: " . $datos->apellido . ", Mail: " . $datos->mail . ", Clave: " . $datos->clave . ", Puesto: " . $datos->puesto . ", Estado: " . $datos->estado;
             break;
             case 'clientes':
                     $cadena .= "- ID: " . $datos->id . ", Nombre: " . $datos->nombre . ", Apellido: " . $datos->apellido . ", Mail: " . $datos->mail . ", DNI: " . $datos->dni;
@@ -399,7 +401,7 @@ class ManejoArchivos
             case 'empleados':
                 foreach($lista->listaCompleta as $dato)
                 {
-                    $cadena .= "{" . $dato->id . "," . $dato->nombre . "," . $dato->apellido . "," . $dato->mail . "," . $dato->clave . "," . $dato->puesto . "}" . ",\n";
+                    $cadena .= "{" . $dato->id . "," . $dato->nombre . "," . $dato->apellido . "," . $dato->mail . "," . $dato->clave . "," . $dato->puesto . "," . $dato->estado . "}" . ",\n";
                 }
             break;
             case 'clientes':

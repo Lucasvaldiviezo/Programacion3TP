@@ -17,7 +17,7 @@ class Empleado extends Model
     const DELETED_AT = 'fecha_de_baja';
 
     protected $fillable = [
-        'nombre', 'apellido', 'mail', 'clave', 'puesto'
+        'nombre', 'apellido', 'mail', 'clave', 'puesto', 'estado'
     ];
 }
 ?>

@@ -47,7 +47,7 @@ class EmpleadoApi implements IApiUsable
         $apellido = $parametros['apellido'];
         $clave = $parametros['clave'];
         $mail = $parametros['mail'];
-
+        $estado = "activo";
         if($parametros['puesto'] == 'mozo' || $parametros['puesto'] == 'cocinero' || $parametros['puesto'] == 'bartender' ||
         $parametros['puesto'] == 'candybar' || $parametros['puesto'] == 'socio')
         {
@@ -68,6 +68,7 @@ class EmpleadoApi implements IApiUsable
         $emp->mail = $mail;
         $emp->clave = $clave;
         $emp->puesto = $puesto;
+        $emp->estado = $estado;
         $emp->save();
         //Log
         ChangelogApi::CrearLog("empleados",$emp->id,$empExistente->id,"Cargar",$emp->nombre . " " . $emp->puesto);

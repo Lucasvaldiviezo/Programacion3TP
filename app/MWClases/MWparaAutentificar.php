@@ -30,7 +30,7 @@ class MWparaAutentificar
 	$lista = Empleado::all();
 	foreach($lista as $emp)
 	{
-		if($emp->mail == $mail && $emp->clave == $clave)
+		if($emp->mail == $mail && $emp->clave == $clave && $emp->estado == 'activo')
 		{
 			$datos = array('usuario' => $mail,'perfil' => $emp->puesto, 'clave' => $clave);
 			$token= AutentificadorJWT::CrearToken($datos);
