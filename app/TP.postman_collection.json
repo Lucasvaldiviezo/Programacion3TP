@@ -159,6 +159,16 @@
 				{
 					"name": "http://localhost/Programacion3TP/app/index.php/producto/",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM0NTA4MDksImV4cCI6MTYyMzQ1NDQwOSwiYXVkIjoiNzliYmM1MGMwMWEyZTVkMzc3MTUzZTY5MGE1OTgxNmFhY2Q0Njc0ZCIsImRhdGEiOnsidXN1YXJpbyI6Im5pY29Abmljby5jb20iLCJwZXJmaWwiOiJzb2NpbyIsImNsYXZlIjoiMTIzYXNkIn0sImFwcCI6IkFQSSBSRVNUIFJFU1RBVVJBTlQgMjAyMSJ9.lraKKZ8k4JHjhVKM6Nu6CgdzxNmVVK-eFcoPj-XSgz4",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -166,22 +176,22 @@
 							"formdata": [
 								{
 									"key": "nombre",
-									"value": "Pepsi",
+									"value": "Hamburguesa",
 									"type": "text"
 								},
 								{
 									"key": "precio",
-									"value": "10.30",
+									"value": "20.50",
 									"type": "text"
 								},
 								{
 									"key": "stock",
-									"value": "10",
+									"value": "50",
 									"type": "text"
 								},
 								{
 									"key": "tipo",
-									"value": "bebida",
+									"value": "comida",
 									"type": "text"
 								}
 							]
@@ -206,6 +216,16 @@
 				{
 					"name": "http://localhost/Programacion3TP/app/index.php/producto/",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM0NTA4MDksImV4cCI6MTYyMzQ1NDQwOSwiYXVkIjoiNzliYmM1MGMwMWEyZTVkMzc3MTUzZTY5MGE1OTgxNmFhY2Q0Njc0ZCIsImRhdGEiOnsidXN1YXJpbyI6Im5pY29Abmljby5jb20iLCJwZXJmaWwiOiJzb2NpbyIsImNsYXZlIjoiMTIzYXNkIn0sImFwcCI6IkFQSSBSRVNUIFJFU1RBVVJBTlQgMjAyMSJ9.lraKKZ8k4JHjhVKM6Nu6CgdzxNmVVK-eFcoPj-XSgz4",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -431,7 +451,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjMwNDEwNjIsImV4cCI6MTYyMzA0NDY2MiwiYXVkIjoiNzliYmM1MGMwMWEyZTVkMzc3MTUzZTY5MGE1OTgxNmFhY2Q0Njc0ZCIsImRhdGEiOnsidXN1YXJpbyI6Im1hdXJvQG1hdXJvLmNvbSIsInBlcmZpbCI6ImJhcnRlbmRlciIsImNsYXZlIjoiY29udHJhc2VcdTAwZjFhMTIzIn0sImFwcCI6IkFQSSBSRVNUIFJFU1RBVVJBTlQgMjAyMSJ9.v6I_FHINMnZ-H7w1ENtj-1O2WWV5UyForb-k5RXtOio",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM0NDA0NTYsImV4cCI6MTYyMzQ0NDA1NiwiYXVkIjoiNzliYmM1MGMwMWEyZTVkMzc3MTUzZTY5MGE1OTgxNmFhY2Q0Njc0ZCIsImRhdGEiOnsidXN1YXJpbyI6Im5pY29Abmljby5jb20iLCJwZXJmaWwiOiJzb2NpbyIsImNsYXZlIjoiMTIzYXNkIn0sImFwcCI6IkFQSSBSRVNUIFJFU1RBVVJBTlQgMjAyMSJ9.qkxncwgKWd_n0N8Nxjz9tiCPWe7ga9SW5N5Aq5yBcgA",
 									"type": "string"
 								}
 							]
@@ -443,12 +463,12 @@
 							"formdata": [
 								{
 									"key": "idMesa",
-									"value": "2",
+									"value": "1",
 									"type": "text"
 								},
 								{
 									"key": "json_productos",
-									"value": "{\"Productos\":[{ \"id\":\"2\",\"cantidad\":\"4\"},{ \"id\":\"1\",\"cantidad\":\"1\"}]}",
+									"value": "{\"Productos\":[{ \"id\":\"2\",\"cantidad\":\"5\"}]}",
 									"type": "text"
 								},
 								{
@@ -458,12 +478,7 @@
 								},
 								{
 									"key": "puesto",
-									"value": "cocina,bar",
-									"type": "text"
-								},
-								{
-									"key": "idEmpleado",
-									"value": "1",
+									"value": "cocina",
 									"type": "text"
 								}
 							]
@@ -488,6 +503,16 @@
 				{
 					"name": "http://localhost/Programacion3TP/app/index.php/pedido/",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM0NDQ4NzIsImV4cCI6MTYyMzQ0ODQ3MiwiYXVkIjoiNzliYmM1MGMwMWEyZTVkMzc3MTUzZTY5MGE1OTgxNmFhY2Q0Njc0ZCIsImRhdGEiOnsidXN1YXJpbyI6Im5pY29Abmljby5jb20iLCJwZXJmaWwiOiJzb2NpbyIsImNsYXZlIjoiMTIzYXNkIn0sImFwcCI6IkFQSSBSRVNUIFJFU1RBVVJBTlQgMjAyMSJ9.b2k2wUqtf_Ar1LzAHWmesMiFlbxP-NT3cHIh8314yjk",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -537,7 +562,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjMwNDE0MTEsImV4cCI6MTYyMzA0NTAxMSwiYXVkIjoiNzliYmM1MGMwMWEyZTVkMzc3MTUzZTY5MGE1OTgxNmFhY2Q0Njc0ZCIsImRhdGEiOnsidXN1YXJpbyI6Im5pY29Abmljby5jb20iLCJwZXJmaWwiOiJzb2NpbyIsImNsYXZlIjoiMTIzYXNkIn0sImFwcCI6IkFQSSBSRVNUIFJFU1RBVVJBTlQgMjAyMSJ9.bfrIaTgnoIppI00vypzERw4EWBZCz2dB_YYb_ER9tH0",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM0NDA0NTYsImV4cCI6MTYyMzQ0NDA1NiwiYXVkIjoiNzliYmM1MGMwMWEyZTVkMzc3MTUzZTY5MGE1OTgxNmFhY2Q0Njc0ZCIsImRhdGEiOnsidXN1YXJpbyI6Im5pY29Abmljby5jb20iLCJwZXJmaWwiOiJzb2NpbyIsImNsYXZlIjoiMTIzYXNkIn0sImFwcCI6IkFQSSBSRVNUIFJFU1RBVVJBTlQgMjAyMSJ9.qkxncwgKWd_n0N8Nxjz9tiCPWe7ga9SW5N5Aq5yBcgA",
 									"type": "string"
 								}
 							]
@@ -549,12 +574,12 @@
 							"urlencoded": [
 								{
 									"key": "estado",
-									"value": "servido",
+									"value": "pagado",
 									"type": "text"
 								},
 								{
 									"key": "id",
-									"value": "1",
+									"value": "3",
 									"type": "text"
 								}
 							]
@@ -579,10 +604,20 @@
 				{
 					"name": "http://localhost/Programacion3TP/app/index.php/pedido/2",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM0NDQ4NzIsImV4cCI6MTYyMzQ0ODQ3MiwiYXVkIjoiNzliYmM1MGMwMWEyZTVkMzc3MTUzZTY5MGE1OTgxNmFhY2Q0Njc0ZCIsImRhdGEiOnsidXN1YXJpbyI6Im5pY29Abmljby5jb20iLCJwZXJmaWwiOiJzb2NpbyIsImNsYXZlIjoiMTIzYXNkIn0sImFwcCI6IkFQSSBSRVNUIFJFU1RBVVJBTlQgMjAyMSJ9.b2k2wUqtf_Ar1LzAHWmesMiFlbxP-NT3cHIh8314yjk",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost/Programacion3TP/app/index.php/pedido/2",
+							"raw": "http://localhost/Programacion3TP/app/index.php/pedido/3",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -592,7 +627,7 @@
 								"app",
 								"index.php",
 								"pedido",
-								"2"
+								"3"
 							]
 						}
 					},
@@ -606,6 +641,16 @@
 				{
 					"name": "http://localhost/Programacion3TP/index.php/empleado/2",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM0NTA4MDksImV4cCI6MTYyMzQ1NDQwOSwiYXVkIjoiNzliYmM1MGMwMWEyZTVkMzc3MTUzZTY5MGE1OTgxNmFhY2Q0Njc0ZCIsImRhdGEiOnsidXN1YXJpbyI6Im5pY29Abmljby5jb20iLCJwZXJmaWwiOiJzb2NpbyIsImNsYXZlIjoiMTIzYXNkIn0sImFwcCI6IkFQSSBSRVNUIFJFU1RBVVJBTlQgMjAyMSJ9.lraKKZ8k4JHjhVKM6Nu6CgdzxNmVVK-eFcoPj-XSgz4",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -628,6 +673,16 @@
 				{
 					"name": "http://localhost/Programacion3TP/app/index.php/empleado/",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM1NjQwNDcsImV4cCI6MTYyMzU2NzY0NywiYXVkIjoiNzliYmM1MGMwMWEyZTVkMzc3MTUzZTY5MGE1OTgxNmFhY2Q0Njc0ZCIsImRhdGEiOnsidXN1YXJpbyI6Im5pY29Abmljby5jb20iLCJwZXJmaWwiOiJzb2NpbyIsImNsYXZlIjoiMTIzYXNkIn0sImFwcCI6IkFQSSBSRVNUIFJFU1RBVVJBTlQgMjAyMSJ9.tdwZ1BiUB5kwaBetx5nB2KeQXq6N6ypTXSR88lcncxc",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -635,17 +690,27 @@
 							"formdata": [
 								{
 									"key": "nombre",
-									"value": "",
+									"value": "Maria",
 									"type": "text"
 								},
 								{
 									"key": "apellido",
-									"value": "",
+									"value": "Dolores",
 									"type": "text"
 								},
 								{
 									"key": "mail",
-									"value": "",
+									"value": "maria@maria.com",
+									"type": "text"
+								},
+								{
+									"key": "clave",
+									"value": "tonto125",
+									"type": "text"
+								},
+								{
+									"key": "puesto",
+									"value": "socio",
 									"type": "text"
 								}
 							]
@@ -783,6 +848,97 @@
 								"index.php",
 								"login",
 								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Archivos",
+			"item": [
+				{
+					"name": "http://localhost/Programacion3TP/app/index.php/archivo/",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM1NjQwNDcsImV4cCI6MTYyMzU2NzY0NywiYXVkIjoiNzliYmM1MGMwMWEyZTVkMzc3MTUzZTY5MGE1OTgxNmFhY2Q0Njc0ZCIsImRhdGEiOnsidXN1YXJpbyI6Im5pY29Abmljby5jb20iLCJwZXJmaWwiOiJzb2NpbyIsImNsYXZlIjoiMTIzYXNkIn0sImFwcCI6IkFQSSBSRVNUIFJFU1RBVVJBTlQgMjAyMSJ9.tdwZ1BiUB5kwaBetx5nB2KeQXq6N6ypTXSR88lcncxc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "tipo",
+									"value": "empleados",
+									"type": "text"
+								},
+								{
+									"key": "formato",
+									"value": "csv",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/Programacion3TP/app/index.php/archivo/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Programacion3TP",
+								"app",
+								"index.php",
+								"archivo",
+								""
+							],
+							"query": [
+								{
+									"key": "tipo",
+									"value": "empleado",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost/Programacion3TP/app/index.php/archivo/pedidos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM1NjQwNDcsImV4cCI6MTYyMzU2NzY0NywiYXVkIjoiNzliYmM1MGMwMWEyZTVkMzc3MTUzZTY5MGE1OTgxNmFhY2Q0Njc0ZCIsImRhdGEiOnsidXN1YXJpbyI6Im5pY29Abmljby5jb20iLCJwZXJmaWwiOiJzb2NpbyIsImNsYXZlIjoiMTIzYXNkIn0sImFwcCI6IkFQSSBSRVNUIFJFU1RBVVJBTlQgMjAyMSJ9.tdwZ1BiUB5kwaBetx5nB2KeQXq6N6ypTXSR88lcncxc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/Programacion3TP/app/index.php/archivo/pedidos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Programacion3TP",
+								"app",
+								"index.php",
+								"archivo",
+								"pedidos"
 							]
 						}
 					},

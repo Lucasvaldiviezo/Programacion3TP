@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-06-2021 a las 01:42:56
+-- Tiempo de generación: 13-06-2021 a las 08:49:53
 -- Versión del servidor: 10.4.19-MariaDB
 -- Versión de PHP: 8.0.6
 
@@ -50,7 +50,15 @@ INSERT INTO `changelogs` (`id`, `tabla_afectada`, `id_afectado`, `id_empleado`, 
 (5, 'pedidos', 3, 3, 'Eliminar', 'Se realizo el softdelete de la fila', '2021-06-11 18:17:20', NULL),
 (6, 'productos', 5, 3, 'Cargar', 'Stock: 50', '2021-06-11 19:34:34', NULL),
 (7, 'productos', 0, 3, 'Obtener datos', 'Datos de todos los producto', '2021-06-11 19:35:18', NULL),
-(8, 'empleados', 0, 3, 'Obtener datos', 'Datos de todos los empleados', '2021-06-11 19:53:58', NULL);
+(8, 'empleados', 0, 3, 'Obtener datos', 'Datos de todos los empleados', '2021-06-11 19:53:58', NULL),
+(9, 'pedidos', 0, 3, 'Carga Archivo', 'Se cargo en la DB los datos de un archivo CSV', '2021-06-13 03:26:55', NULL),
+(10, 'empleados', 7, 3, 'Cargar', 'Antonio mozo', '2021-06-13 03:37:59', NULL),
+(11, 'empleados', 8, 3, 'Cargar', 'Carlos socio', '2021-06-13 03:39:58', NULL),
+(12, 'empleados', 9, 3, 'Cargar', 'Maria socio', '2021-06-13 03:42:22', NULL),
+(13, 'empleados', 10, 3, 'Cargar', 'Maria socio', '2021-06-13 03:42:45', NULL),
+(14, 'empleados', 11, 3, 'Cargar', 'Maria socio', '2021-06-13 03:43:12', NULL),
+(15, 'empleados', 12, 3, 'Cargar', 'Maria socio', '2021-06-13 03:46:15', NULL),
+(16, 'empleados', 0, 3, 'Guardar Archivo', 'Se descargaron los datos de la DB en formato csv', '2021-06-13 03:48:15', NULL);
 
 -- --------------------------------------------------------
 
@@ -88,6 +96,7 @@ CREATE TABLE `empleados` (
   `mail` varchar(50) COLLATE latin1_spanish_ci NOT NULL,
   `clave` varchar(50) COLLATE latin1_spanish_ci NOT NULL,
   `puesto` varchar(50) COLLATE latin1_spanish_ci NOT NULL,
+  `estado` varchar(50) COLLATE latin1_spanish_ci NOT NULL,
   `fecha_de_baja` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
@@ -95,10 +104,19 @@ CREATE TABLE `empleados` (
 -- Volcado de datos para la tabla `empleados`
 --
 
-INSERT INTO `empleados` (`id`, `nombre`, `apellido`, `mail`, `clave`, `puesto`, `fecha_de_baja`) VALUES
-(1, 'Mauro', 'Ovando', 'mauro@mauro.com', 'contraseña123', 'bartender', NULL),
-(2, 'Martin', 'Bottani', 'martin@martin.com', 'chau534', 'cocina', NULL),
-(3, 'Nicolas', 'Alvarez', 'nico@nico.com', '123asd', 'socio', NULL);
+INSERT INTO `empleados` (`id`, `nombre`, `apellido`, `mail`, `clave`, `puesto`, `estado`, `fecha_de_baja`) VALUES
+(1, 'Mauro', 'Ovando', 'mauro@mauro.com', 'contraseña123', 'bartender', 'activo', NULL),
+(2, 'Martin', 'Bottani', 'martin@martin.com', 'chau534', 'cocina', 'activo', NULL),
+(3, 'Nicolas', 'Alvarez', 'nico@nico.com', '123asd', 'socio', 'activo', NULL),
+(4, 'Mauro', 'Ovando', 'mauro@mauro.com', 'contraseña123', 'bartender', 'activo', NULL),
+(5, 'Martin', 'Bottani', 'martin@martin.com', 'chau534', 'cocina', 'activo', NULL),
+(6, 'Nicolas', 'Alvarez', 'nico@nico.com', '123asd', 'socio', 'activo', NULL),
+(7, 'Antonio', 'Garibaldi', 'antonio@antonio.com', 'jojoji', 'mozo', 'activo', NULL),
+(8, 'Carlos', 'Gonzales', 'carlos@carlos.com', 'montene51s', 'socio', 'activo', NULL),
+(9, 'Maria', 'Dolores', 'maria@maria.com', 'tonto125', 'socio', 'activo', NULL),
+(10, 'Jonatan', 'Antores', 'jona@jona.com', 'trentonono1', 'cocina', 'activo', NULL),
+(11, 'Pablo', 'Allo', 'pablo@pablo.com', 'pablotosaz', 'candybar', 'actvio', NULL),
+(12, 'Adriana', 'Allo', 'adri@adri.com', 'jajazjojo', 'mozo', 'activo', NULL);
 
 -- --------------------------------------------------------
 
@@ -151,7 +169,9 @@ CREATE TABLE `pedidos` (
 INSERT INTO `pedidos` (`id`, `codigo`, `id_cliente`, `id_mesa`, `datos_productos`, `id_empleado`, `estado`, `total`, `puesto`, `fecha_hora_creacion`, `ultima_modificacion`, `fecha_de_baja`) VALUES
 (1, '8dz7o', 1, 2, 'Id: 2 - Cantidad: 4 / Id: 1 - Cantidad: 1 / ', 1, 'pagado', '$52', '-mesa-', '2021-06-07 01:45:01', '17:00:57', NULL),
 (2, '1hrgb', 1, 2, 'Id: 2 - Cantidad: 3 / ', 3, 'pagado', '$33', '-mesa-', '2021-06-11 16:59:42', '17:08:16', NULL),
-(3, 'qcamt', 1, 1, 'Id: 2 - Cantidad: 5 / ', 3, 'pagado', '$55', '-mesa-', '2021-06-11 17:04:22', '17:30:19', '2021-06-11');
+(3, 'qcamt', 1, 1, 'Id: 2 - Cantidad: 5 / ', 3, 'pagado', '$55', '-mesa-', '2021-06-11 17:04:22', '17:30:19', '2021-06-11'),
+(4, 'iuo71', 1, 2, 'Id: 2 - Cantidad: 6 / ', 1, 'pagado', '$66', '-mesa-', '2021-06-13 02:50:10', '10:00:57', NULL),
+(5, 'iuo71', 1, 2, 'Id: 2 - Cantidad: 6 / ', 1, 'pagado', '$66', '-mesa-', '2021-06-13 02:50:10', '10:00:57', NULL);
 
 -- --------------------------------------------------------
 
@@ -227,7 +247,7 @@ ALTER TABLE `productos`
 -- AUTO_INCREMENT de la tabla `changelogs`
 --
 ALTER TABLE `changelogs`
-  MODIFY `id` int(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `clientes`
@@ -239,7 +259,7 @@ ALTER TABLE `clientes`
 -- AUTO_INCREMENT de la tabla `empleados`
 --
 ALTER TABLE `empleados`
-  MODIFY `id` int(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `mesas`
@@ -251,7 +271,7 @@ ALTER TABLE `mesas`
 -- AUTO_INCREMENT de la tabla `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `id` int(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
