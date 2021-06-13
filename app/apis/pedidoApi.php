@@ -79,6 +79,7 @@ class PedidoApi implements IApiUsable
             $total = 0;
             $datosProductos = "";
             $checkeoProducto = true;
+            $tiempoEstimado = time();
             foreach($productos->Productos as $prod)
             {
                 $auxProd = Producto::where('id', $prod->id)->first();
@@ -87,6 +88,13 @@ class PedidoApi implements IApiUsable
                 {
                     $total += $auxProd->precio * $prod->cantidad;
                     $datosProductos = $datosProductos . "Id: " . $prod->id . " - Cantidad: " . $prod->cantidad . " / ";
+                    if($auxProd->tipo == 'comida')
+                    {
+                        $tiempoEstimado = $tiempoEstimado + (10 * 30) * $prod->cantidad;
+                    }else
+                    {
+                        $tiempoEstimado = $tiempoEstimado + (5 * 30) * $prod->cantidad;
+                    }
                 }else
                 {
                     $checkeoProducto = false;
@@ -108,12 +116,13 @@ class PedidoApi implements IApiUsable
                 $ped->puesto = $puestoAux;
                 $ped->fecha_hora_creacion = date("y-m-d H:i:s");
                 $ped->ultima_modificacion = date("H:i:s");
+                $ped->tiempo_estimado = date("H:i:s", $tiempoEstimado);
                 $ped->total = "$" . $total;
                 $ped->datos_productos = $datosProductos;
                 $ped->save();
                 $payload = json_encode(array("mensaje" => "Pedido creado con exito"));
                 //agregamos los cambios al changelog
-                ChangelogApi::CrearLog("pedidos",$ped->id,$empleado->id,"Cargar",$estado);
+                ChangelogApi::CrearLog("pedidos",$ped->id,$empleado->id,"Cargar",$estado . " | " . $tiempoEstimado);
                 //Descontamos el stock
                 foreach($productos->Productos as $prod)
                 {
@@ -183,7 +192,14 @@ class PedidoApi implements IApiUsable
                     $pedido->estado = $estado;
                     $pedido->ultima_modificacion = date("H:i:s");
                     $pedido->save();
-                    
+                    $minutos = abs((strtotime($pedido->ultima_modificacion) - strtotime($pedido->tiempo_estimado))/60);
+                    if($minutos > 5)
+                    {   
+                        $aviso = "Entregado tarde";
+                    }else
+                    {
+                        $aviso = "Entregado a tiempo";
+                    } 
                 break;
                 case "servido":
                     $pedido->id_empleado = $empleado->id;
@@ -193,6 +209,14 @@ class PedidoApi implements IApiUsable
                     $pedido->ultima_modificacion = date("H:i:s");
                     $pedido->save();
                     $mesa->save();
+                    $minutos = abs((strtotime($pedido->ultima_modificacion) - strtotime($pedido->tiempo_estimado))/60);
+                    if($minutos > 5)
+                    {   
+                        $aviso = "Servido tarde";
+                    }else
+                    {
+                        $aviso = "Servido a tiempo";
+                    }
                 break;
                 case "pagando":
                     $pedido->id_empleado = $empleado->id;
@@ -202,6 +226,14 @@ class PedidoApi implements IApiUsable
                     $pedido->ultima_modificacion = date("H:i:s");
                     $pedido->save();
                     $mesa->save();
+                    $minutos = abs((strtotime($pedido->ultima_modificacion) - strtotime($pedido->tiempo_estimado))/60);
+                    if($minutos > 120)
+                    {   
+                        $aviso = "Cuenta entregada tarde";
+                    }else
+                    {
+                        $aviso = "Cuenta entregada a tiempo";
+                    }
                 break;
                 case "pagado":
                     $pedido->id_empleado = $empleado->id;
@@ -211,6 +243,7 @@ class PedidoApi implements IApiUsable
                     $pedido->ultima_modificacion = date("H:i:s");
                     $pedido->save();
                     $mesa->save();
+                    $aviso = "pagado";
                 break;
                 default:
                 $pedido->puesto = "-mozo-";
@@ -221,7 +254,7 @@ class PedidoApi implements IApiUsable
                 $mesa->save();
             }
             $payload = json_encode(array("mensaje" => "Pedido modificado con exito"));
-            ChangelogApi::CrearLog("pedidos",$pedido->id,$empleado->id,"Modificar",$estado);
+            ChangelogApi::CrearLog("pedidos",$pedido->id,$empleado->id,"Modificar",$estado . "($aviso)");
         }else
         {
             $payload = json_encode(array("mensaje" => "No existe el pedido"));

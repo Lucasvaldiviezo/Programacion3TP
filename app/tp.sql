@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-06-2021 a las 08:49:53
+-- Tiempo de generación: 13-06-2021 a las 23:04:37
 -- Versión del servidor: 10.4.19-MariaDB
 -- Versión de PHP: 8.0.6
 
@@ -58,7 +58,43 @@ INSERT INTO `changelogs` (`id`, `tabla_afectada`, `id_afectado`, `id_empleado`, 
 (13, 'empleados', 10, 3, 'Cargar', 'Maria socio', '2021-06-13 03:42:45', NULL),
 (14, 'empleados', 11, 3, 'Cargar', 'Maria socio', '2021-06-13 03:43:12', NULL),
 (15, 'empleados', 12, 3, 'Cargar', 'Maria socio', '2021-06-13 03:46:15', NULL),
-(16, 'empleados', 0, 3, 'Guardar Archivo', 'Se descargaron los datos de la DB en formato csv', '2021-06-13 03:48:15', NULL);
+(16, 'empleados', 0, 3, 'Guardar Archivo', 'Se descargaron los datos de la DB en formato csv', '2021-06-13 03:48:15', NULL),
+(17, 'pedidos', 6, 3, 'Cargar', 'en preparacion', '2021-06-13 17:18:20', NULL),
+(18, 'productos', 2, 3, 'Reduccion de stock', 'Se redujo stock en 3', '2021-06-13 17:18:20', NULL),
+(19, 'pedidos', 7, 3, 'Cargar', 'en preparacion', '2021-06-13 17:19:12', NULL),
+(20, 'productos', 2, 3, 'Reduccion de stock', 'Se redujo stock en 3', '2021-06-13 17:19:12', NULL),
+(21, 'pedidos', 8, 3, 'Cargar', 'en preparacion', '2021-06-13 17:20:28', NULL),
+(22, 'productos', 2, 3, 'Reduccion de stock', 'Se redujo stock en 3', '2021-06-13 17:20:28', NULL),
+(23, 'pedidos', 9, 3, 'Cargar', 'en preparacion', '2021-06-13 17:21:53', NULL),
+(24, 'productos', 2, 3, 'Reduccion de stock', 'Se redujo stock en 3', '2021-06-13 17:21:53', NULL),
+(25, 'pedidos', 10, 3, 'Cargar', 'en preparacion', '2021-06-13 17:22:42', NULL),
+(26, 'productos', 2, 3, 'Reduccion de stock', 'Se redujo stock en 3', '2021-06-13 17:22:42', NULL),
+(27, 'pedidos', 11, 3, 'Cargar', 'en preparacion', '2021-06-13 17:23:10', NULL),
+(28, 'productos', 2, 3, 'Reduccion de stock', 'Se redujo stock en 3', '2021-06-13 17:23:10', NULL),
+(29, 'pedidos', 12, 3, 'Cargar', 'en preparacion', '2021-06-13 17:25:08', NULL),
+(30, 'productos', 2, 3, 'Reduccion de stock', 'Se redujo stock en 3', '2021-06-13 17:25:08', NULL),
+(31, 'pedidos', 13, 3, 'Cargar', 'en preparacion', '2021-06-13 17:26:23', NULL),
+(32, 'productos', 2, 3, 'Reduccion de stock', 'Se redujo stock en 3', '2021-06-13 17:26:23', NULL),
+(33, 'pedidos', 14, 3, 'Cargar', 'en preparacion', '2021-06-13 17:26:51', NULL),
+(34, 'productos', 2, 3, 'Reduccion de stock', 'Se redujo stock en 3', '2021-06-13 17:26:51', NULL),
+(35, 'pedidos', 15, 3, 'Cargar', 'en preparacion', '2021-06-13 17:27:46', NULL),
+(36, 'productos', 2, 3, 'Reduccion de stock', 'Se redujo stock en 3', '2021-06-13 17:27:46', NULL),
+(37, 'pedidos', 16, 3, 'Cargar', 'en preparacion', '2021-06-13 17:28:14', NULL),
+(38, 'productos', 2, 3, 'Reduccion de stock', 'Se redujo stock en 3', '2021-06-13 17:28:14', NULL),
+(39, 'pedidos', 17, 3, 'Cargar', 'en preparacion', '2021-06-13 17:28:38', NULL),
+(40, 'productos', 1, 3, 'Reduccion de stock', 'Se redujo stock en 3', '2021-06-13 17:28:38', NULL),
+(41, 'pedidos', 18, 3, 'Cargar', 'en preparacion', '2021-06-13 17:29:12', NULL),
+(42, 'productos', 1, 3, 'Reduccion de stock', 'Se redujo stock en 3', '2021-06-13 17:29:12', NULL),
+(43, 'pedidos', 19, 3, 'Cargar', 'en preparacion', '2021-06-13 17:29:33', NULL),
+(44, 'productos', 1, 3, 'Reduccion de stock', 'Se redujo stock en 3', '2021-06-13 17:29:33', NULL),
+(45, 'pedidos', 0, 3, 'Guardar Archivo', 'Se descargaron los datos de la DB en formato csv', '2021-06-13 17:30:37', NULL),
+(46, 'pedidos', 0, 3, 'Carga Archivo', 'Se cargo en la DB los datos de un archivo CSV', '2021-06-13 17:31:47', NULL),
+(47, 'pedidos', 5, 3, 'Cargar', 'en preparacion | 1623618239', '2021-06-13 17:48:59', NULL),
+(48, 'productos', 1, 3, 'Reduccion de stock', 'Se redujo stock en 3', '2021-06-13 17:48:59', NULL),
+(49, 'pedidos', 5, 3, 'Modificar', 'listo para servir(Entregado a tiempo)', '2021-06-13 17:51:17', NULL),
+(50, 'pedidos', 5, 3, 'Modificar', 'servido(Servido tarde)', '2021-06-13 17:53:21', NULL),
+(51, 'pedidos', 5, 3, 'Modificar', 'pagado()', '2021-06-13 18:01:50', NULL),
+(52, 'pedidos', 5, 3, 'Modificar', 'pagado(pagado)', '2021-06-13 18:03:37', NULL);
 
 -- --------------------------------------------------------
 
@@ -159,6 +195,7 @@ CREATE TABLE `pedidos` (
   `puesto` varchar(100) COLLATE latin1_spanish_ci NOT NULL,
   `fecha_hora_creacion` datetime NOT NULL,
   `ultima_modificacion` time NOT NULL,
+  `tiempo_estimado` time NOT NULL,
   `fecha_de_baja` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
@@ -166,12 +203,12 @@ CREATE TABLE `pedidos` (
 -- Volcado de datos para la tabla `pedidos`
 --
 
-INSERT INTO `pedidos` (`id`, `codigo`, `id_cliente`, `id_mesa`, `datos_productos`, `id_empleado`, `estado`, `total`, `puesto`, `fecha_hora_creacion`, `ultima_modificacion`, `fecha_de_baja`) VALUES
-(1, '8dz7o', 1, 2, 'Id: 2 - Cantidad: 4 / Id: 1 - Cantidad: 1 / ', 1, 'pagado', '$52', '-mesa-', '2021-06-07 01:45:01', '17:00:57', NULL),
-(2, '1hrgb', 1, 2, 'Id: 2 - Cantidad: 3 / ', 3, 'pagado', '$33', '-mesa-', '2021-06-11 16:59:42', '17:08:16', NULL),
-(3, 'qcamt', 1, 1, 'Id: 2 - Cantidad: 5 / ', 3, 'pagado', '$55', '-mesa-', '2021-06-11 17:04:22', '17:30:19', '2021-06-11'),
-(4, 'iuo71', 1, 2, 'Id: 2 - Cantidad: 6 / ', 1, 'pagado', '$66', '-mesa-', '2021-06-13 02:50:10', '10:00:57', NULL),
-(5, 'iuo71', 1, 2, 'Id: 2 - Cantidad: 6 / ', 1, 'pagado', '$66', '-mesa-', '2021-06-13 02:50:10', '10:00:57', NULL);
+INSERT INTO `pedidos` (`id`, `codigo`, `id_cliente`, `id_mesa`, `datos_productos`, `id_empleado`, `estado`, `total`, `puesto`, `fecha_hora_creacion`, `ultima_modificacion`, `tiempo_estimado`, `fecha_de_baja`) VALUES
+(1, 'iuo71', 1, 2, 'Id: 2 - Cantidad: 6 / ', 1, 'pagado', '$66', '-mesa-', '2021-06-13 02:50:10', '10:00:57', '10:15:57', NULL),
+(2, '1hrgb', 1, 2, 'Id: 2 - Cantidad: 3 / ', 3, 'pagado', '$33', '-mesa-', '2021-06-11 16:59:42', '17:08:16', '17:20:16', NULL),
+(3, 'iuo71', 1, 2, 'Id: 2 - Cantidad: 6 / ', 1, 'pagado', '$66', '-mesa-', '2021-06-13 02:50:10', '10:00:57', '10:10:57', NULL),
+(4, 'iuo71', 1, 2, 'Id: 2 - Cantidad: 6 / ', 1, 'pagado', '$66', '-mesa-', '2021-06-13 02:50:10', '10:00:57', '10:30:57', NULL),
+(5, 'h2pxe', 1, 1, 'Id: 1 - Cantidad: 3 / ', 3, 'pagado', '$24', '-mesa-', '2021-06-13 17:48:59', '18:03:37', '17:41:01', NULL);
 
 -- --------------------------------------------------------
 
@@ -193,8 +230,8 @@ CREATE TABLE `productos` (
 --
 
 INSERT INTO `productos` (`id`, `nombre`, `precio`, `stock`, `tipo`, `fecha_de_baja`) VALUES
-(1, 'Papas Fritas', '8', 288, 'comida', NULL),
-(2, 'Coca Cola', '11', 27, 'bebida', NULL),
+(1, 'Papas Fritas', '8', 276, 'comida', NULL),
+(2, 'Coca Cola', '11', 494, 'bebida', NULL),
 (3, 'Sprite', '6', 200, 'bebida', '2021-06-05'),
 (4, 'Hamburguesa', '21', 50, 'comida', NULL),
 (5, 'Hamburguesa Vegana', '21', 50, 'comida', NULL);
@@ -247,7 +284,7 @@ ALTER TABLE `productos`
 -- AUTO_INCREMENT de la tabla `changelogs`
 --
 ALTER TABLE `changelogs`
-  MODIFY `id` int(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(18) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT de la tabla `clientes`

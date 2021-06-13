@@ -136,6 +136,7 @@ class ManejoArchivos
                         $puesto = $datos[8];
                         $fechaHora = $datos[9];
                         $ultimaModificacion = $datos[10];
+                        $tiempoEstimado = $datos[11];
                         $pedido = new Pedido();
                         $pedido->codigo = $codigo;
                         $pedido->id_cliente = $idCliente;
@@ -147,6 +148,7 @@ class ManejoArchivos
                         $pedido->puesto = $puesto;
                         $pedido->fecha_hora_creacion = $fechaHora;
                         $pedido->ultima_modificacion = $ultimaModificacion;
+                        $pedido->tiempo_estimado = $tiempoEstimado;
                         $pedido->save();
                     }
                 }
@@ -384,7 +386,7 @@ class ManejoArchivos
             break;
             case 'pedidos':
                     $cadena .= "- ID: " . $datos->id . ", Codigo: " . $datos->codigo . ", ID Cliente: " . $datos->id_cliente . ", ID Mesa: " . $datos->id_mesa . ", Datos Productos: " . $datos->datos_productos . ", ID Empleado: " . $datos->id_empleado . ", Estado: " .$datos->estado . ", Total: " . $datos->total . ", Puesto: ";
-                    $cadena .= $datos->puesto . ", Fecha y Hora: " . $datos->fecha_hora_creacion . ", Ultima Modificacion:" . $datos->ultima_modificacion;
+                    $cadena .= $datos->puesto . ", Fecha y Hora: " . $datos->fecha_hora_creacion . ", Ultima Modificacion: " . $datos->ultima_modificacion . ", Tiempo Estimado: " . $datos->tiempo_estimado;
             break;
             default:
                     $cadena .= "- ID: " . $datos->id . ", Tabla Afectada: " . $datos->tabla_afectada . ", ID Afectado: " . $datos->id_afectado . ", ID Empleado: " . $datos->id_empleado . ", Accion: " . $datos->accion . ", Descripcion: " . $datos->descripcion . ", Fecha y Hora: " . $datos->fecha_hora;
@@ -426,7 +428,7 @@ class ManejoArchivos
                 foreach($lista->listaCompleta as $dato)
                 {
                     $cadena .= "{" . $dato->id . "," . $dato->codigo . "," . $dato->id_cliente . "," . $dato->id_mesa . "," . $dato->datos_productos . "," . $dato->id_empleado . "," .$dato->estado . "," . $dato->total . ",";
-                    $cadena .= $dato->puesto . "," . $dato->fecha_hora_creacion . "," . $dato->ultima_modificacion . "}" . ",\n";
+                    $cadena .= $dato->puesto . "," . $dato->fecha_hora_creacion . "," . $dato->ultima_modificacion . ", ". $dato->tiempo_estimado . "}" . ",\n";
                 }
             break;
             default:
