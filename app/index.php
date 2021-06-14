@@ -12,6 +12,7 @@ require_once './apis/mesaApi.php';
 require_once './apis/pedidoApi.php';
 require_once './apis/clienteApi.php';
 require_once './apis/manejoArchivos.php';
+require_once './apis/informacion.php';
 require './MWClases/MWparaAutentificar.php';
 require './MWClases/MWparaCORS.php';
 
@@ -123,6 +124,12 @@ $app->group('/archivo', function () {
   $this->post('/', \manejoArchivos::class . ':GuardarDatos');
 
   $this->get('/{tipo}', \manejoArchivos::class . ':LeerCSV');
+     
+})->add(\MWparaAutentificar::class . ':VerificarUsuario');
+
+$app->group('/informacion', function () {
+ 
+  $this->get('/{tipo}', \informacion::class . ':Estadisticas');
      
 })->add(\MWparaAutentificar::class . ':VerificarUsuario');
 
