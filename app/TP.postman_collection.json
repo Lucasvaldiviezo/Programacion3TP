@@ -819,6 +819,16 @@
 				{
 					"name": "http://localhost/Programacion3TP/app/index.php/login/",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM2MTU0MjMsImV4cCI6MTYyMzYxOTAyMywiYXVkIjoiNzliYmM1MGMwMWEyZTVkMzc3MTUzZTY5MGE1OTgxNmFhY2Q0Njc0ZCIsImRhdGEiOnsidXN1YXJpbyI6Im5pY29Abmljby5jb20iLCJwZXJmaWwiOiJzb2NpbyIsImNsYXZlIjoiMTIzYXNkIn0sImFwcCI6IkFQSSBSRVNUIFJFU1RBVVJBTlQgMjAyMSJ9.sffIEnMiUaaVB3WSWJxURIRsF_vimtoxtaBqiqf4rZs",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -920,7 +930,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM1NjQwNDcsImV4cCI6MTYyMzU2NzY0NywiYXVkIjoiNzliYmM1MGMwMWEyZTVkMzc3MTUzZTY5MGE1OTgxNmFhY2Q0Njc0ZCIsImRhdGEiOnsidXN1YXJpbyI6Im5pY29Abmljby5jb20iLCJwZXJmaWwiOiJzb2NpbyIsImNsYXZlIjoiMTIzYXNkIn0sImFwcCI6IkFQSSBSRVNUIFJFU1RBVVJBTlQgMjAyMSJ9.tdwZ1BiUB5kwaBetx5nB2KeQXq6N6ypTXSR88lcncxc",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM2MTU0NTcsImV4cCI6MTYyMzYxOTA1NywiYXVkIjoiNzliYmM1MGMwMWEyZTVkMzc3MTUzZTY5MGE1OTgxNmFhY2Q0Njc0ZCIsImRhdGEiOnsidXN1YXJpbyI6Im5pY29Abmljby5jb20iLCJwZXJmaWwiOiJzb2NpbyIsImNsYXZlIjoiMTIzYXNkIn0sImFwcCI6IkFQSSBSRVNUIFJFU1RBVVJBTlQgMjAyMSJ9.AAvWsWDQ_2kiA6T8L4wcIG_3vgcMfF0BHFpI6wnCzOI",
 									"type": "string"
 								}
 							]
@@ -939,6 +949,43 @@
 								"index.php",
 								"archivo",
 								"pedidos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Estadisticas",
+			"item": [
+				{
+					"name": "http://localhost/Programacion3TP/app/index.php/informacion/",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjM2MzU3MzcsImV4cCI6MTYyMzYzOTMzNywiYXVkIjoiNzliYmM1MGMwMWEyZTVkMzc3MTUzZTY5MGE1OTgxNmFhY2Q0Njc0ZCIsImRhdGEiOnsidXN1YXJpbyI6Im5pY29Abmljby5jb20iLCJwZXJmaWwiOiJzb2NpbyIsImNsYXZlIjoiMTIzYXNkIn0sImFwcCI6IkFQSSBSRVNUIFJFU1RBVVJBTlQgMjAyMSJ9.5WwkgcxF2Q2RLfafyrjPHFT8q07jIOOFONTAr1he6rY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/Programacion3TP/app/index.php/informacion/clientes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"Programacion3TP",
+								"app",
+								"index.php",
+								"informacion",
+								"clientes"
 							]
 						}
 					},
