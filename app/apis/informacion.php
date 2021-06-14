@@ -206,8 +206,6 @@ class Informacion
                     echo "Este año $fechaAño no consumio ningun cliente";
                 }
             break;
-            case 'productos':
-            break;
         }
     }
 
